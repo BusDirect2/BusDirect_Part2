@@ -130,3 +130,31 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }
 
+
+.disponibleBadge::before{
+  content: "";
+  display: inline-block;
+  background-color: rgb(81, 228, 81);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px dotted green;
+}
+.reserverBadge::before{
+  content: "";
+  display: inline-block;
+  background-color: rgb(226, 61, 61);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px dotted rgb(186, 25, 25);
+}
+.VipBadge::before{
+  content: "";
+  display: inline-block;
+  background-color: rgb(228, 211, 24);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px dotted rgb(202, 173, 5);
+}

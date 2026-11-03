@@ -3,17 +3,26 @@ import {placesLibres, reserver} from "./reservations.js"
         const trips=await async(trajets);
         const dataTrajet=new URLSearchParams(location.search);
         const id=Number(dataTrajet.get("id"))
-        if(id>20)
+        
+            console.log('id trajet: '+id);
+            const trip = trips.find(trip=>{
+              return trip.id===id
+            })
+            let contentpricipale=document.querySelector(".contenent");
+            let messageError=document.querySelector(".messageError");
+        if(id>20 || id<=0 || !Number(id))
         {
-          alert("trajet introvable")
+            
 
+            contentpricipale.classList.add("hidden")
+            messageError.classList.remove("hidden")
+            
         }
-        console.log('id trajet: '+id);
-        const trip = trips.find(trip=>{
-          return trip.id===id
-        })
-        const Reservations =trip.reservations;
-        console.table("length de reservations :"+trip.reservations.length)
+        
+            const Reservations =trip.reservations;
+            console.table("length de reservations :"+trip.reservations.length)
+        
+        
         // console.table(Reservations)
 
 //affichage des inforamtions d'un boxes

@@ -8,9 +8,19 @@ export function estComplet(trip)
 {
     return placesLibres(trip)===0
 }
-export function estVIP(siege) {}   
+export function estVIP(siege) {
+       return Number(siege)>=1 && Number(siege)<=4
+   
+}   
 
-export function prixSiege(prix, siege)  {}
+export function prixSiege(prix, siege)  {
+    if(estVIP(siege))
+    {
+        prix=Math.round(prix*(1.1))
+    }
+    
+    return prix
+}
 
 // export const test = () => console.log("store OK");:
 export function recetteTrajet(trip) {

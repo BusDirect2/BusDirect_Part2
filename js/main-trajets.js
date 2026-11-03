@@ -58,7 +58,7 @@ function Recherche(trips)
 
        const recette=trips.reduce((total,trip)=>{
         return  total+trip.reservations.length*trip.price;
-       },0)
+       },0).toLocaleString("fr-FR")
        let chiffreAffire=document.getElementById("recette")
        chiffreAffire.textContent=recette
 

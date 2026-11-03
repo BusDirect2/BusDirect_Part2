@@ -1,9 +1,20 @@
 import { async,trajets } from "./store.js";
-import {placesLibres} from "./reservations.js"
-const trips=await async(trajets);
+import {placesLibres, reserver} from "./reservations.js"
+        const trips=await async(trajets);
+        const dataTrajet=new URLSearchParams(location.search);
+        const id=Number(dataTrajet.get("id"))
+        if(id>20)
+        {
+          alert("trajet introvable")
 
-
-// console.log('trajet: '+trip.departure);
+        }
+        console.log('id trajet: '+id);
+        const trip = trips.find(trip=>{
+          return trip.id===id
+        })
+        const Reservations =trip.reservations;
+        console.table("length de reservations :"+trip.reservations.length)
+        // console.table(Reservations)
 
 //affichage des inforamtions d'un boxes
 const container = document.querySelector(".countainer-Box");
@@ -21,9 +32,12 @@ const NewSiege = document.getElementById("newSeat");
 const messageSupprimer=document.querySelector(".messageSupprimer");
 const RemoveForm=document.querySelector(".SupprimerForm");
 const remove_select = document.querySelector(".RemoveNom");
-const Reservations = [];
+
 //fonction d'affiche les details de trajet
-affichageTrajet()
+affichageDetails()
+saveArray()
+getArray()  
+document.querySelector(".cout-ticket").textContent=Reservations.length
 
 function saveArray()
 {
@@ -32,30 +46,70 @@ function saveArray()
 function getArray()
 {
   let data= JSON.parse(localStorage.getItem("reservations") || "[]")
-   Reservations.push(...data)
 }
 
 function affichageDetails()
 {
-  let dispo=20-Reservations.length
-  let tarif=80*Reservations.length
-  // document.getElementById("chiffreAffaire").textContent=tarif;
+  
+//ville
+let depart=document.getElementById("depart");
+depart.textContent=trip.departure;
+let destination=document.getElementById("destination");
+destination.textContent=trip.destination;
+//prix
+let prix=document.querySelector(".prix");
+prix.textContent=trip.price+ "DH" ;
+//horaire
+let time=document.querySelector(".horaire");
+time.textContent=trip.departureTime+ "→" +trip.arrivalTime;
+//placelibre
+  let dispo=document.querySelector(".plcDispo")
+  dispo.textContent=placesLibres(trip)+"/20 places"
+//recette
+  let recette = document.querySelector(".chiffreAffaire");
+
+    recette.textContent = trip.reservations.reduce((total, reservation) => {
+        return total + trip.price;
+    }, 0) + " DH";
 }
 
-  getArray()  
-  affichageDetails();
-  document.querySelector(".cout-ticket").textContent=Reservations.length
-
+function affichageSieges()
+{
+      
+         Boxes.forEach(siege=>{
+             let nbrSiege=siege.querySelector(".siege");
+             let nomSiege=siege.querySelector(".nom");
+             let phone=siege.querySelector(".phone");
+             
+            let result=Reservations.find((item)=>{
+            return Number(nbrSiege.textContent.trim())===Number(item.seat)    
+            })
+            if(result)
+            {
+               nomSiege.textContent=result.name
+               phone.textContent=result.phone
+               siege.classList.remove("disponible")
+               siege.classList.add("reserver")
+            }
+           
+    
+} )
+} 
+affichageSieges()
+ RemplirSelectAjouter()
+ Remplir()
+ RemplirSelectEdit();
+ RemplirOfremove()
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  RemplirSelectAjouter()
-  RemplirSelectEdit();
-  RemplirOfremove()
-   affichageDetails()
+  // RemplirSelectAjouter()
+  // RemplirSelectEdit();
+  // RemplirOfremove()
+  //  affichageDetails()
   
 });
 
-function Ajouter() {
+// function Ajouter() {
   let nomPasseger = form.querySelector(".nomPasseger").value.trim(); //input
   let siegeAjouter = form.querySelector(".Siege").value.trim(); //select
   // let placeDisponible = document.getElementById("plcDispo");
@@ -167,24 +221,24 @@ function Ajouter() {
             }
 
             message.style.display = "block";
-}
+// }
 
-function Trouver(nom) {
-  let Passager = Reservations.find((ticket) => {
-    return ticket.Pesrsonne.trim().toLowerCase() === nom.trim().toLowerCase();
-  });
-  return Passager;
-}
-function Dispo() { 
-  let place = Array.from(Boxes).find((Dispo) => {
-    return Dispo.classList.contains("disponible");
-  });
-  if (place === undefined) {
-    return undefined;
-  } else {
-    return place.textContent.trim();
-  }
-}
+// function Trouver(nom) {
+//   let Passager = Reservations.find((ticket) => {
+//     return ticket.Pesrsonne.trim().toLowerCase() === nom.trim().toLowerCase();
+//   });
+//   return Passager;
+// }
+// function Dispo() { 
+  // let place = Array.from(Boxes).find((Dispo) => {
+  //   return Dispo.classList.contains("disponible");
+  // });
+//   if (place === undefined) {
+//     return undefined;
+//   } else {
+//     return place.textContent.trim();
+//   }
+// }
 function Remplir() {
   let Nom_Select = document.getElementById("NomModifier");
 
@@ -196,19 +250,19 @@ function Remplir() {
   Nom_Select.append(option);
   Reservations.forEach((nom) => {
     let option = document.createElement("option");
-    option.value = nom.Pesrsonne;
-    option.textContent = nom.Pesrsonne;
+    option.value = nom.name;
+    option.textContent = nom.name;
     Nom_Select.append(option);
    
   });
 }
-function messageDisplay(message)
-{
-                         message.classList.remove("active")
-                         void message.offsetWidth;
-                         message.classList.add("active");
+// function messageDisplay(message)
+// {
+//                          message.classList.remove("active")
+//                          void message.offsetWidth;
+//                          message.classList.add("active");
     
-}
+// }
 function RemplirSelectEdit() {
    const DispoSiege = container.querySelectorAll(".box.disponible");
           
@@ -228,6 +282,7 @@ function RemplirSelectEdit() {
           });
 
 }
+
 function RemplirSelectAjouter()
 {
   const DispoSiege = container.querySelectorAll(".box.disponible");
@@ -253,94 +308,94 @@ function RemplirSelectAjouter()
           ModifierPassager();
           RemplirOfremove()
         });
-function ModifierPassager() {
+// function ModifierPassager() {
   
-                                    // 1. Vérifier le passager choisi
-                      if (nomPassager.value === "chose") {
-                         messageModifier.classList.remove("valid");
-                         messageModifier.classList.add("error");
-                         messageModifier.innerHTML ="Choisis un nom de passager" ;
-                         messageDisplay(messageModifier)
-                         messageModifier.style.display = "block";
-                        return;
-                      }
+//                                     // 1. Vérifier le passager choisi
+//                       if (nomPassager.value === "chose") {
+//                          messageModifier.classList.remove("valid");
+//                          messageModifier.classList.add("error");
+//                          messageModifier.innerHTML ="Choisis un nom de passager" ;
+//                          messageDisplay(messageModifier)
+//                          messageModifier.style.display = "block";
+//                         return;
+//                       }
 
-                      // 2. Chercher le passager dans Reservations
-                      const index = Reservations.findIndex((ticket) => {
-                        return ticket.Pesrsonne === nomPassager.value;
-                      });
+//                       // 2. Chercher le passager dans Reservations
+//                       const index = Reservations.findIndex((ticket) => {
+//                         return ticket.Pesrsonne === nomPassager.value;
+//                       });
 
                   
-                      // 3. Vérifier si les deux champs sont vides
-                      if (NewPassager.value.trim() === "" && NewSiege.value === "chose") {
-                         messageModifier.classList.remove("valid");
-                         messageModifier.classList.add("error");
-                         messageModifier.innerHTML ="Les deux champs sont vides" ;
-                         messageModifier.style.display = "block";
-                         messageDisplay(messageModifier)
-                         return;
+//                       // 3. Vérifier si les deux champs sont vides
+//                       if (NewPassager.value.trim() === "" && NewSiege.value === "chose") {
+//                          messageModifier.classList.remove("valid");
+//                          messageModifier.classList.add("error");
+//                          messageModifier.innerHTML ="Les deux champs sont vides" ;
+//                          messageModifier.style.display = "block";
+//                          messageDisplay(messageModifier)
+//                          return;
                         
-                      }
-                      // 4. Modifier le nom si le champ n'est pas vide
-                      if (NewPassager.value.trim() !== "") {
-                        Reservations[index].Pesrsonne = NewPassager.value.trim();
+//                       }
+//                       // 4. Modifier le nom si le champ n'est pas vide
+//                       if (NewPassager.value.trim() !== "") {
+//                         Reservations[index].Pesrsonne = NewPassager.value.trim();
                     
-                      }
+//                       }
 
-                      // 5. Modifier le siège si un nouveau siège est choisi
-                      if (NewSiege.value !== "chose") {
-                        Reservations[index].siegeNum = Number(NewSiege.value);
-                      }
+//                       // 5. Modifier le siège si un nouveau siège est choisi
+//                       if (NewSiege.value !== "chose") {
+//                         Reservations[index].siegeNum = Number(NewSiege.value);
+//                       }
 
-                      // 6. Mettre à jour les boxes selon Reservations
-                      Boxes.forEach((box) => {
-                        //nombre de siege sur grid
-                        const numero = Number(
-                          box.querySelector(".siege").textContent.trim()
-                        );
-                        //nom de passager sur grid
-                        const nomBox = box.querySelector(".nom");
+//                       // 6. Mettre à jour les boxes selon Reservations
+//                       Boxes.forEach((box) => {
+//                         //nombre de siege sur grid
+//                         const numero = Number(
+//                           box.querySelector(".siege").textContent.trim()
+//                         );
+//                         //nom de passager sur grid
+//                         const nomBox = box.querySelector(".nom");
 
-                        const reservation = Reservations.find((ticket) => {
-                          return ticket.siegeNum === numero;
-                        });
+//                         const reservation = Reservations.find((ticket) => {
+//                           return ticket.siegeNum === numero;
+//                         });
 
-                        if (reservation) {
-                          nomBox.textContent = reservation.Pesrsonne;
-                          box.classList.remove("disponible");
-                          box.classList.add("reserver");
-                        } else {
-                          nomBox.textContent = "";
-                          box.classList.remove("reserver");
-                          box.classList.add("disponible");
-                        }
-                      });
+//                         if (reservation) {
+//                           nomBox.textContent = reservation.Pesrsonne;
+//                           box.classList.remove("disponible");
+//                           box.classList.add("reserver");
+//                         } else {
+//                           nomBox.textContent = "";
+//                           box.classList.remove("reserver");
+//                           box.classList.add("disponible");
+//                         }
+//                       });
 
-                      // 7. Actualiser les listes
-                      Remplir();
-                      saveArray()
-                      RemplirSelectEdit();
-                      RemplirSelectAjouter()
-                      // 8. Vider les champs après modification
-                      NewPassager.value = "";
-                      NewSiege.value = "chose";
-                      messageModifier.classList.remove("error");
-                      messageModifier.classList.add("valid");
-                      messageModifier.innerHTML ="Modification réussie" ;
-                      messageModifier.style.display = "block";
-                      messageDisplay(messageModifier)
-                      console.log("table de reservation", Reservations);
+//                       // 7. Actualiser les listes
+//                       Remplir();
+//                       saveArray()
+//                       RemplirSelectEdit();
+//                       RemplirSelectAjouter()
+//                       // 8. Vider les champs après modification
+//                       NewPassager.value = "";
+//                       NewSiege.value = "chose";
+//                       messageModifier.classList.remove("error");
+//                       messageModifier.classList.add("valid");
+//                       messageModifier.innerHTML ="Modification réussie" ;
+//                       messageModifier.style.display = "block";
+//                       messageDisplay(messageModifier)
+//                       console.log("table de reservation", Reservations);
 
                        
-}
+// }
        
-RemoveForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-  affichageDetails()
-  RemplirOfremove()
-});
+// RemoveForm.addEventListener("submit", function (e) {
+//   e.preventDefault();
+//   affichageDetails()
+//   RemplirOfremove()
+// });
           
-//fonction de supprimer 
+// //fonction de supprimer 
 function RemplirOfremove() {
   
 
@@ -352,117 +407,117 @@ function RemplirOfremove() {
    remove_select.append(option);
   Reservations.forEach((nom) => {
     let option = document.createElement("option");
-    option.value = nom.Pesrsonne;
-    option.textContent = nom.Pesrsonne;
+    option.value = nom.name;
+    option.textContent = nom.name;
     remove_select.append(option);
    
   });
 }
-function Supprimer(){
-  //nom choisze pour supprimer 
-   let selectedNom=RemoveForm.querySelector(".RemoveNom").value;
-   console.log("ici pour supprimer")
-   if(selectedNom ==="chose")
-   {
-       messageSupprimer.classList.remove("valid");
-       messageSupprimer.classList.add("error");
-       messageSupprimer.textContent="Voulez-vous choisez un passagez";
-       messageSupprimer.style.display="block";
-       messageDisplay(messageSupprimer)
+// function Supprimer(){
+//   //nom choisze pour supprimer 
+//    let selectedNom=RemoveForm.querySelector(".RemoveNom").value;
+//    console.log("ici pour supprimer")
+//    if(selectedNom ==="chose")
+//    {
+//        messageSupprimer.classList.remove("valid");
+//        messageSupprimer.classList.add("error");
+//        messageSupprimer.textContent="Voulez-vous choisez un passagez";
+//        messageSupprimer.style.display="block";
+//        messageDisplay(messageSupprimer)
 
-   }
-   else
-   {
-        let index=Reservations.findIndex(Passager=>{
-        return Passager.Pesrsonne===selectedNom;
-        }  )
-        Reservations.splice(index,1)
-        saveArray()
-        document.querySelector(".cout-ticket").textContent=Reservations.length
+//    }
+//    else
+//    {
+//         let index=Reservations.findIndex(Passager=>{
+//         return Passager.Pesrsonne===selectedNom;
+//         }  )
+//         Reservations.splice(index,1)
+//         saveArray()
+//         document.querySelector(".cout-ticket").textContent=Reservations.length
         
-        Boxes.forEach(box=>{
-          let nom=box.querySelector(".nom");
-          if(nom.textContent.trim()===selectedNom)
-          {
-               nom.textContent="";
-               box.classList.remove("reserver");
-               box.classList.add("disponible");
-          }
-        })
-       messageSupprimer.classList.remove("error");
-       messageSupprimer.classList.add("valid");
-       messageSupprimer.textContent="Le passager bien supprimer ";
-       messageSupprimer.style.display="block";  //save madification at local
-       localStorage.setItem("placesDisponibles",  places);
-      //  localStorage.setItem("montantTotal", chiffreAffaire);
+//         Boxes.forEach(box=>{
+//           let nom=box.querySelector(".nom");
+//           if(nom.textContent.trim()===selectedNom)
+//           {
+//                nom.textContent="";
+//                box.classList.remove("reserver");
+//                box.classList.add("disponible");
+//           }
+//         })
+//        messageSupprimer.classList.remove("error");
+//        messageSupprimer.classList.add("valid");
+//        messageSupprimer.textContent="Le passager bien supprimer ";
+//        messageSupprimer.style.display="block";  //save madification at local
+//        localStorage.setItem("placesDisponibles",  places);
+//       //  localStorage.setItem("montantTotal", chiffreAffaire);
        
-       messageDisplay(messageSupprimer)
-        Remplir();
-        saveArray()
-        RemplirSelectAjouter()
-        RemplirSelectEdit();
-        RemplirOfremove();
+//        messageDisplay(messageSupprimer)
+//         Remplir();
+//         saveArray()
+//         RemplirSelectAjouter()
+//         RemplirSelectEdit();
+//         RemplirOfremove();
        
-   }
+//    }
 
-}
+// }
          
                  
-   //afficher les information d'un boxes a partir le click sur le box 
+//    //afficher les information d'un boxes a partir le click sur le box 
 
-container.addEventListener("click",e=>{
-  // console.log("not found")
-      let siege=e.target.closest(".box");
-      if (!siege) return;
-       let Nom =siege.querySelector(".nom").textContent
-       let siegeNbr =siege.querySelector(".siege").textContent.trim()
-       if(Nom!=="" && siegeNbr!=="")
-       {
+// container.addEventListener("click",e=>{
+//   // console.log("not found")
+//       let siege=e.target.closest(".box");
+//       if (!siege) return;
+//        let Nom =siege.querySelector(".nom").textContent
+//        let siegeNbr =siege.querySelector(".siege").textContent.trim()
+//        if(Nom!=="" && siegeNbr!=="")
+//        {
           
-          nom.value=Nom //select dyal modifier  Nom
-          remove_select.value=Nom//select Supprimer
-       }
-       else
-       {
-        Remplir();
-        RemplirOfremove();
-       }
+//           nom.value=Nom //select dyal modifier  Nom
+//           remove_select.value=Nom//select Supprimer
+//        }
+//        else
+//        {
+//         Remplir();
+//         RemplirOfremove();
+//        }
      
-})
+// })
 
                           
                           
                               
               
                       
-  Boxes.forEach((box) => {
+//   Boxes.forEach((box) => {
                       
-                        const numero = Number(
-                          box.querySelector(".siege").textContent.trim()
-                        );
+//                         const numero = Number(
+//                           box.querySelector(".siege").textContent.trim()
+//                         );
                      
-                        const nomBox = box.querySelector(".nom");
+//                         const nomBox = box.querySelector(".nom");
 
-                        const reservation = Reservations.find((ticket) => {
-                          return ticket.siegeNum === numero;
-                        });
+//                         const reservation = Reservations.find((ticket) => {
+//                           return ticket.siegeNum === numero;
+//                         });
 
-                        if (reservation) {
-                          nomBox.textContent = reservation.Pesrsonne;
-                          box.classList.remove("disponible");
-                          box.classList.add("reserver");
-                        } else {
-                          nomBox.textContent = "";
-                          box.classList.remove("reserver");
-                          box.classList.add("disponible");
-                        }
-                      });
+//                         if (reservation) {
+//                           nomBox.textContent = reservation.Pesrsonne;
+//                           box.classList.remove("disponible");
+//                           box.classList.add("reserver");
+//                         } else {
+//                           nomBox.textContent = "";
+//                           box.classList.remove("reserver");
+//                           box.classList.add("disponible");
+//                         }
+//                       });
 
                      
-                      Remplir();
-                      RemplirSelectEdit();
-                      RemplirSelectAjouter()
-                      RemplirOfremove();             
+//                       Remplir();
+//                       RemplirSelectEdit();
+//                       RemplirSelectAjouter()
+//                       RemplirOfremove();             
      
 
 /* DRAG & DROP */
@@ -557,37 +612,3 @@ Boxes.forEach(box => {
 });
 
 
-function affichageTrajet()
-{
-  // console.table(trips)
-//lier les pages par id 
-
-const dataTrajet=new URLSearchParams(location.search);
-const id=Number(dataTrajet.get("id"))
-console.log('id trajet: '+id);
-const trip = trips.find(trip=>{
-  return trip.id===id
-})
-//ville
-let depart=document.getElementById("depart");
-depart.textContent=trip.departure;
-let destination=document.getElementById("destination");
-destination.textContent=trip.destination;
-//prix
-let prix=document.querySelector(".prix");
-prix.textContent=trip.price+ "DH" ;
-//horaire
-let time=document.querySelector(".horaire");
-time.textContent=trip.departureTime+ "→" +trip.arrivalTime;
-//placelibre
-  let dispo=document.querySelector(".plcDispo")
-  dispo.textContent=placesLibres(trip)+"/20 places"
-//recette
-  let recette = document.querySelector(".chiffreAffaire");
-
-    recette.textContent = trip.reservations.reduce((total, reservation) => {
-        return total + trip.price;
-    }, 0) + " DH";
-  // dispo.textContent=r(trip)+
-  console.table(trips)
-}

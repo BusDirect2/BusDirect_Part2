@@ -41,7 +41,7 @@
 }
 .box p.nom
 {
-  height: 50%;
+  /* height: 50%; */
   background-color: rgba(225, 241, 239, 0.747);
   margin-bottom: 3px;
   font-size: 20px;

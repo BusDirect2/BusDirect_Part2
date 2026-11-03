@@ -16,7 +16,12 @@ export function prixSiege(prix, siege)  {}
 export function recetteTrajet(trip) {
     
 }      
-export function reserver(trip, p, siege){}
+export function reserver(trip, p, siege){
+    // trip.reservations.array.forEach(element => {
+    //     p=element.name;
+    //     siege=element.seat;
+    // });
+}
 export function modifier(trip, siege, p){}
 export function annuler(trip, siege) {}     
 export function inscrireEnAttente(trip, p){}

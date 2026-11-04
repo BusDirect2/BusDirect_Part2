@@ -1,13 +1,15 @@
-import { async,trajets } from "./store.js";
-import {placesLibres, prixSiege} from "./reservations.js"
+import { async,trajets,sauvegarder } from "./store.js";
+import {regex_telephone,validerPassager} from "./validators.js"
+import {estComplet, estVIP, placesLibres, prixSiege,reserver} from "./reservations.js"
         const trips=await async(trajets);
         const dataTrajet=new URLSearchParams(location.search);
         const id=Number(dataTrajet.get("id"))
         
-            console.log('id trajet: '+id);
-            const trip = trips.find(trip=>{
+          // console.log('id trajet: '+id);
+         const trip = trips.find(trip=>{
               return trip.id===id
             })
+
             let contentpricipale=document.querySelector(".contenent");
             let messageError=document.querySelector(".messageError");
         if(id>20 || id<=0 || !Number(id))
@@ -20,10 +22,11 @@ import {placesLibres, prixSiege} from "./reservations.js"
         }
         
             const Reservations =trip.reservations;
-            console.table("length de reservations :"+trip.reservations.length)
+            // console.table("length de reservations :"+trip.reservations.length)
         
-        
-        // console.table(Reservations)
+        console.log("ID:", id);
+        console.log("TRIP:", trip);
+        console.table(Reservations)
 
 //affichage des inforamtions d'un boxes
 const container = document.querySelector(".countainer-Box");
@@ -31,6 +34,8 @@ const NexSiege = document.querySelector(".Siege");
 const nom = document.querySelector("#NomModifier");
 const Boxes = document.querySelectorAll(".box");
 const message = document.querySelector(".message");
+let messagePhone=document.querySelector(".messagePhone");
+let messageNom=document.querySelector(".messageNom");
 const messageModifier = document.querySelector(".messageModifier");
 const formModifier = document.querySelector(".EditForm");
 const selectModifier = document.getElementById("newSeat");
@@ -43,17 +48,19 @@ const RemoveForm=document.querySelector(".SupprimerForm");
 const remove_select = document.querySelector(".RemoveNom");
 
 //fonction d'affiche les details de trajet
-saveArray()
+// saveArray()
 getArray()  
 document.querySelector(".cout-ticket").textContent=Reservations.length
 
 function saveArray()
 {
-  localStorage.setItem("reservations",JSON.stringify(Reservations));
+  sauvegarder(trips) 
 }
 function getArray()
 {
-  let data= JSON.parse(localStorage.getItem("reservations") || "[]")
+  
+   JSON.parse(localStorage.getItem("trajets") || "")
+  
 }
 
 function affichageDetails()
@@ -64,6 +71,7 @@ let depart=document.getElementById("depart");
 depart.textContent=trip.departure;
 let destination=document.getElementById("destination");
 destination.textContent=trip.destination;
+
 //prix
 let prix=document.querySelector(".prix");
 prix.textContent=trip.price+ "DH" ;
@@ -71,14 +79,13 @@ prix.textContent=trip.price+ "DH" ;
 let time=document.querySelector(".horaire");
 time.textContent=trip.departureTime+ "→" +trip.arrivalTime;
 //placelibre
-  let dispo=document.querySelector(".plcDispo")
-  dispo.textContent=placesLibres(trip)+"/20 places"
+  let dispo=placesLibres(trip)
+  document.querySelector(".plcDispo").textContent=dispo+"/20 places"
 //recette
-  let recette = document.querySelector(".chiffreAffaire");
-
-    recette.textContent = trip.reservations.reduce((total, reservation) => {
+  let recette = trip.reservations.reduce((total, reservation) => {
         return total + prixSiege(Number(trip.price), reservation.seat);
-    }, 0).toLocaleString("fr-FR")+ " DH";
+    }, 0);
+  document.querySelector(".chiffreAffaire").textContent = recette.toLocaleString("fr-FR")+ " DH";
 }
 affichageDetails()
 
@@ -111,143 +118,133 @@ affichageSieges()
  RemplirOfremove()
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  // RemplirSelectAjouter()
-  // RemplirSelectEdit();
-  // RemplirOfremove()
-  //  affichageDetails()
   
 });
-
-// function Ajouter() {
+window.Ajouter = Ajouter;
+function Ajouter() {
   let nomPasseger = form.querySelector(".nomPasseger").value.trim(); //input
+  let phonePasseger = form.querySelector(".phone").value.trim(); //input
   let siegeAjouter = form.querySelector(".Siege").value.trim(); //select
-  // let placeDisponible = document.getElementById("plcDispo");
-  // let chiffreAffaire = Number(
-  //   document.getElementById("chiffreAffaire").textContent,
-  // );
+    let resultNom=validerPassager(Reservations,nomPasseger);
+    let resultphone=regex_telephone(phonePasseger,Reservations);
+        if(resultNom!=true)
+        {
+          messageNom.textContent=validerPassager(Reservations,nomPasseger)
+          messageNom.classList.remove("hidden")
+          messageNom.classList.add("error")
+          messageDisplay(messageNom)
+        }
+       if(resultphone!=true)
+       {
+        messagePhone.textContent=regex_telephone(phonePasseger,Reservations)
+        messagePhone.classList.remove("hidden")
+        messagePhone.classList.add("error")
+        messageDisplay(messagePhone)
+       }
+       if(resultNom==true && resultphone==true)
+       {
 
+          //  console.log(nomPasseger)
+          //  console.log(phonePasseger)
+           console.log("valid")
+
+              if (siegeAjouter === "chose")
+              {
+                  //condition dyal ila champs khawi isayfto lhadik li dsiponible ms machi vip 
+                    let place=Array.from(Boxes).find(box=>{
+                      return !box.classList.contains("vip") && !box.classList.contains("reserver")
+                    })
+                    let numseat=place.querySelector(".siege").textContent.trim();
+                    console.log("place choisi derect:",place)
+                    // console.log("siege :",numseat.textContent)
+                      let nom = place.querySelector(".nom");
+                    
+                     
+                       nom.textContent = nomPasseger;
+                       Reservations.push({
+                        seat: numseat,
+                        name: nomPasseger,
+                        phone: phonePasseger
+                      });
+                       affichageDetails()
+                      
+                      document.querySelector(".cout-ticket").textContent=Reservations.length
+                       saveArray()
+                      place.classList.remove("disponible");
+                      place.classList.add("reserver");
+                     
+                      form.querySelector(".nomPasseger").value = "";
+                      form.querySelector(".phone").value=""
+                      form.querySelector(".Siege").value = "chose";
+
+                      //affichage de message
+                      message.classList.remove("error");
+                      message.classList.add("valid");
+                      message.classList.remove("hidden");
+                      message.innerHTML ="Reservation bien Enregistrer" ;
+                      // console.log("le squope de ajouter ");
+                      Remplir();
+                      messageDisplay(message)
+              }
+              
+              if (estComplet(trip)) 
+                {
+               
+                     message.classList.remove("valid");
+                      message.classList.add("error");
+                      message.classList.remove("hidden");
+                      message.innerHTML ="le train est complet" ;
+                }
+                else {
+        
+
+                  Boxes.forEach(function (siege) {
+                    //recherche sur les boxes
+                    let siegeBox = siege.querySelector(".siege").textContent.trim();
+                    if (siegeAjouter === siegeBox) {
+                      let nom = siege.querySelector(".nom");
+                    
+                     
+                       nom.textContent = nomPasseger;
+                       Reservations.push({
+                        seat: siegeAjouter,
+                        name: nomPasseger,
+                        phone: phonePasseger
+                      });
+                      
+                      affichageDetails()
+                      
+                      document.querySelector(".cout-ticket").textContent=Reservations.length
+                       saveArray()
+                      siege.classList.remove("disponible");
+                      siege.classList.add("reserver");
+                     
+                      form.querySelector(".nomPasseger").value = "";
+                      form.querySelector(".phone").value=""
+                      form.querySelector(".Siege").value = "chose";
+
+                      //affichage de message
+                      message.classList.remove("error");
+                      message.classList.add("valid");
+                      message.classList.remove("hidden");
+                      message.innerHTML ="Reservation bien Enregistrer" ;
+                      // console.log("le squope de ajouter ");
+                      Remplir();
+                      messageDisplay(message)
+                      }
+                    
+                  });
+            }
+
+
+
+       }
+       
+       
+   
+      }
  
 
-            //  if (nomPasseger === "") {
-            //             message.classList.remove("valid");
-            //             message.classList.add("error");
-            //             message.innerHTML = "Remplir le nom";
-            //             messageDisplay(message)
-            //           } 
-            //  else if (Trouver(nomPasseger)) {
-            //             console.log("here");
-            //             message.classList.remove("valid");
-            //             message.classList.add("error");
-            //             message.innerHTML =   "Ce passager deja Existe";
-            //             messageDisplay(message)
-            //           } 
-                      
-  
-            //  else if (siegeAjouter === "chose") {
-            //         console.log("champ siege est vide");
-            //         let dispoPlace = Dispo();
-            //         if (dispoPlace === undefined) {
-            //           console.log("le train est complet");
-            //         } else {
-            //           // console.log("le siege et :", dispoPlace);
-
-            //           Boxes.forEach(function (siege) {
-            //         //recherche sur les boxes
-            //         let siegeBox = siege.querySelector(".siege").textContent.trim();
-            //         if (dispoPlace === siegeBox) {
-            //           let nom = siege.querySelector(".nom");
-            //           let option = form.querySelector(
-            //             '.Siege option[value="' + dispoPlace + '"]',
-            //           );
-            //           nom.textContent = nomPasseger;
-            //           Reservations.push({
-            //             siegeNum: Number(dispoPlace),
-            //             Pesrsonne: nomPasseger,
-            //           });
-            //           saveArray()
-            //           document.querySelector(".cout-ticket").textContent=Reservations.length
-                
-                 
-              //         siege.classList.remove("disponible");
-              //         siege.classList.add("reserver");
-              //         option.style.display = "none";
-              //         document.querySelector(".nomPasseger").value = "";
-              //         form.querySelector(".Siege").value = "chose";
-              //         //affichage de message
-              //         message.classList.remove("error");
-              //         message.classList.add("valid");
-              //         message.innerHTML =   "Reservation bien Enregistrer";
-              //          messageDisplay(message)
-              //         Remplir();
-                      
-              //       }
-              //     });
-              //   }
-              // } 
-              // else {
-              //message validation
-
-            //   Boxes.forEach(function (siege) {
-            //     //recherche sur les boxes
-            //     let siegeBox = siege.querySelector(".siege").textContent.trim();
-            //     if (siegeAjouter === siegeBox) {
-            //       let nom = siege.querySelector(".nom");
-            //       let option = form.querySelector(
-            //         '.Siege option[value="' + siegeAjouter + '"]',
-            //       );
-            //       nom.textContent = nomPasseger;
-            //       Reservations.push({
-            //         siegeNum: Number(siegeAjouter),
-            //         Pesrsonne: nomPasseger,
-            //       });
-            //       saveArray()
-            //       document.querySelector(".cout-ticket").textContent=Reservations.length
-            //       let placesReserver = Reservations.length;
-            //        places=20 - placesReserver;
-            //       // placeDisponible.innerHTML = places;
-            //       // chiffreAffaire += 80;
-            //       // document.getElementById("chiffreAffaire").innerHTML = chiffreAffaire;
-            //       //save madification at local
-            //       localStorage.setItem("placesDisponibles",  places);
-            //       // localStorage.setItem("montantTotal", chiffreAffaire);
-            //       // document.getElementById("chiffreAffaire").innerHTML = chiffreAffaire;
-            //       siege.classList.remove("disponible");
-            //       siege.classList.add("reserver");
-            //       option.style.display = "none";
-
-            //       document.querySelector(".nomPasseger").value = "";
-            //       form.querySelector(".Siege").value = "chose";
-
-            //       //affichage de message
-            //       message.classList.remove("error");
-            //       message.classList.add("valid");
-            //       message.innerHTML ="Reservation bien Enregistrer" ;
-            //       // console.log("le squope de ajouter ");
-            //       Remplir();
-            //       messageDisplay(message)
-            //     }
-            //   });
-            // }
-
-            // message.style.display = "block";
-// }
-
-// function Trouver(nom) {
-//   let Passager = Reservations.find((ticket) => {
-//     return ticket.Pesrsonne.trim().toLowerCase() === nom.trim().toLowerCase();
-//   });
-//   return Passager;
-// }
-// function Dispo() { 
-  // let place = Array.from(Boxes).find((Dispo) => {
-  //   return Dispo.classList.contains("disponible");
-  // });
-//   if (place === undefined) {
-//     return undefined;
-//   } else {
-//     return place.textContent.trim();
-//   }
-// }
 function Remplir() {
   let Nom_Select = document.getElementById("NomModifier");
 
@@ -265,13 +262,7 @@ function Remplir() {
    
   });
 }
-// function messageDisplay(message)
-// {
-//                          message.classList.remove("active")
-//                          void message.offsetWidth;
-//                          message.classList.add("active");
-    
-// }
+
 function RemplirSelectEdit() {
    const DispoSiege = container.querySelectorAll(".box.disponible");
           
@@ -306,12 +297,25 @@ function RemplirSelectAjouter()
           DispoSiege.forEach((num) => {
             let sigeNum = num.querySelector(".siege").textContent.trim();
             let option = document.createElement("option");
+            
             option.value = sigeNum;
-            option.textContent = sigeNum;
+            option.textContent = estVIP(sigeNum)? `${sigeNum}-VIP-${prixSiege(Number(trip.price),sigeNum)} DH`: sigeNum;
             NexSiege.append(option);
           });
 
 }
+function messageDisplay(message) {
+  message.classList.remove("active");
+  void message.offsetWidth;
+  message.classList.add("active");
+}
+function Dispo() { 
+  let place = Array.from(Boxes).find((vip) => {
+    return vip.classList.contains("vip");
+  });
+  return place
+}
+// console.log("les places vip",vip())
         formModifier.addEventListener("submit", (e) => {
           e.preventDefault();
           ModifierPassager();

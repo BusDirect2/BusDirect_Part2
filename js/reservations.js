@@ -1,7 +1,9 @@
-
 export const test = () => console.log("reservation OK");
 
 export function  placesLibres(trip){
+    //   console.log("Trip:", trip);
+    console.log("Reservations:", trip.reservations);
+
     return trip.capacity-trip.reservations.length
 }
 export function estComplet(trip)
@@ -22,15 +24,10 @@ export function prixSiege(prix, siege)  {
     return prix
 }
 
-// export const test = () => console.log("store OK");:
-export function recetteTrajet(trip) {
-    
-}      
+
 export function reserver(trip, p, siege){
-    // trip.reservations.array.forEach(element => {
-    //     p=element.name;
-    //     siege=element.seat;
-    // });
+    
+   
 }
 export function modifier(trip, siege, p){}
 export function annuler(trip, siege) {}     

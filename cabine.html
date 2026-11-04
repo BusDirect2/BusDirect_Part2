@@ -199,12 +199,24 @@
                 <tr>
                     <td class="text-center"><input type="text" name="nomComplet" id="nomComplet" placeholder="Ex:Mariem Bajbouji" class="nomPasseger w-[90%] rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"></td>
                 </tr>
+                  <tr>
+                    <td class="w-full flex justify-center ">
+                        <p class="messageNom   border-1 w-[90%] text-center p-1 rounded-xl mt-2  hidden" ></p>
+                    </td>
+                </tr>
+                
                 <tr>
                     <td><label for="nom" class="text-xs font-semibold text-slate-700">Telephne Passager<span class="text-red-500">*</span></label></td>
                 </tr>
                 <tr>
                     <td class="text-center"><input type="text" name="phone" id="phone" placeholder="Ex: 0644401108" class="phone w-[90%] rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"></td>
                 </tr>
+                  <tr>
+                    <td class="w-full flex justify-center ">
+                        <p class="messagePhone   border-1 w-[90%] text-center p-1 rounded-xl mt-2  hidden" ></p>
+                    </td>
+                </tr>
+                
                 <tr>
                     <td><label for="choix" class="text-xs font-semibold text-slate-700">   Sélectionner un siège <span class="font-normal text-slate-400">(optionnel)</label></td>
                 </tr>
@@ -215,12 +227,12 @@
                         
                       
                     </select>
-                </class=>
+               
                 </tr>
              
                 <tr >
                        <td class="text-center">
-                              <button class=" w-[90%] my-5  rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-600" onclick="Ajouter()" >  
+                              <button  id="btnAjouter" class=" w-[90%] my-5  rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-600" onclick="Ajouter()" >  
                                <i class="fa-solid fa-chair"></i>&nbsp; Reserver </button>
                         </td>
                 </tr>

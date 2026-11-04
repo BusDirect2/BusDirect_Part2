@@ -45,7 +45,7 @@
    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
    font-size:medium;
    padding: 4px;
-   font-weight: bold;
+   /* font-weight: bold; */
 }
 .box p.nom
 {
@@ -53,6 +53,7 @@
   background-color: rgba(225, 241, 239, 0.747);
   margin-bottom: 3px;
   font-size: 20px;
+ 
 }
 .box p.siege
 {
@@ -73,7 +74,7 @@
  /* border-1 w-[90%] text-center p-1 rounded-xl  */
 .active
         {
-             animation: opacity 1s forwards 3s;
+             animation: opacity 0s forwards 3s;
             
              
         }

@@ -147,7 +147,14 @@ function Ajouter() {
           //  console.log(nomPasseger)
           //  console.log(phonePasseger)
            console.log("valid")
-
+               if (estComplet(trip)) 
+               {
+               
+                     message.classList.remove("valid");
+                      message.classList.add("error");
+                      message.classList.remove("hidden");
+                      message.innerHTML ="le train est complet" ;
+              }
               if (siegeAjouter === "chose")
               {
                   //condition dyal ila champs khawi isayfto lhadik li dsiponible ms machi vip 
@@ -187,14 +194,7 @@ function Ajouter() {
                       messageDisplay(message)
               }
               
-              if (estComplet(trip)) 
-                {
-               
-                     message.classList.remove("valid");
-                      message.classList.add("error");
-                      message.classList.remove("hidden");
-                      message.innerHTML ="le train est complet" ;
-                }
+             
                 else {
         
 

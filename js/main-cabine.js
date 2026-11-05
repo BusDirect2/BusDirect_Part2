@@ -31,7 +31,7 @@ import {estComplet, estVIP, placesLibres, prixSiege,reserver} from "./reservatio
 //affichage des inforamtions d'un boxes
 const container = document.querySelector(".countainer-Box");
 const NexSiege = document.querySelector(".Siege");
-const nom = document.querySelector("#NomModifier");
+const NomModifier = document.querySelector("#NomModifier");
 const Boxes = document.querySelectorAll(".box");
 const message = document.querySelector(".message");
 let messagePhone=document.querySelector(".messagePhone");
@@ -41,27 +41,21 @@ const formModifier = document.querySelector(".EditForm");
 const selectModifier = document.getElementById("newSeat");
 const form = document.querySelector(".Ajouter-form");
 const nomPassager = document.getElementById("NomModifier");
-const NewPassager = document.getElementById("NouveauNom");
+
 const NewSiege = document.getElementById("newSeat");
 const messageSupprimer=document.querySelector(".messageSupprimer");
 const RemoveForm=document.querySelector(".SupprimerForm");
 const remove_select = document.querySelector(".RemoveNom");
 
-//fonction d'affiche les details de trajet
-// saveArray()
-getArray()  
+
+
 document.querySelector(".cout-ticket").textContent=Reservations.length
 
 function saveArray()
 {
   sauvegarder(trips) 
 }
-function getArray()
-{
-  
-   JSON.parse(localStorage.getItem("trajets") || "")
-  
-}
+
 
 function affichageDetails()
 {
@@ -111,14 +105,13 @@ function affichageSieges()
     
 } )
 } 
-affichageSieges()
+ affichageSieges()
  RemplirSelectAjouter()
  Remplir()
  RemplirSelectEdit();
  RemplirOfremove()
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  
 });
 window.Ajouter = Ajouter;
 function Ajouter() {
@@ -154,6 +147,7 @@ function Ajouter() {
                       message.classList.add("error");
                       message.classList.remove("hidden");
                       message.innerHTML ="le train est complet" ;
+                      messageDisplay(message)
               }
               if (siegeAjouter === "chose")
               {
@@ -264,7 +258,7 @@ function Remplir() {
 }
 
 function RemplirSelectEdit() {
-   const DispoSiege = container.querySelectorAll(".box.disponible");
+  const DispoSiege = container.querySelectorAll(".box.disponible");
           
           selectModifier.replaceChildren();
 
@@ -276,8 +270,9 @@ function RemplirSelectEdit() {
           DispoSiege.forEach((num) => {
             let sigeNum = num.querySelector(".siege").textContent.trim();
             let option = document.createElement("option");
+            
             option.value = sigeNum;
-            option.textContent = sigeNum;
+            option.textContent = estVIP(sigeNum)? `${sigeNum}-VIP-${prixSiege(Number(trip.price),sigeNum)} DH`: sigeNum;
             selectModifier.append(option);
           });
 
@@ -315,93 +310,171 @@ function Dispo() {
   });
   return place
 }
-// console.log("les places vip",vip())
+
         formModifier.addEventListener("submit", (e) => {
           e.preventDefault();
           ModifierPassager();
           RemplirOfremove()
+
         });
-// function ModifierPassager() {
-  
-//                                     // 1. Vérifier le passager choisi
-//                       if (nomPassager.value === "chose") {
-//                          messageModifier.classList.remove("valid");
-//                          messageModifier.classList.add("error");
-//                          messageModifier.innerHTML ="Choisis un nom de passager" ;
-//                          messageDisplay(messageModifier)
-//                          messageModifier.style.display = "block";
-//                         return;
-//                       }
-
-//                       // 2. Chercher le passager dans Reservations
-//                       const index = Reservations.findIndex((ticket) => {
-//                         return ticket.Pesrsonne === nomPassager.value;
-//                       });
-
-                  
-//                       // 3. Vérifier si les deux champs sont vides
-//                       if (NewPassager.value.trim() === "" && NewSiege.value === "chose") {
-//                          messageModifier.classList.remove("valid");
-//                          messageModifier.classList.add("error");
-//                          messageModifier.innerHTML ="Les deux champs sont vides" ;
-//                          messageModifier.style.display = "block";
-//                          messageDisplay(messageModifier)
-//                          return;
+ window.ModifierPassager=ModifierPassager       
+function ModifierPassager() {
+       let messageOfName=document.querySelector(".msgNameEdit");
+       let msgNewName=document.querySelector(".msgNewName");
+       let msgNewPhone=document.querySelector(".msgNewPhone");
+       let NouveauNom = document.getElementById("NouveauNom").value.trim();
+       let NouveauPhone = document.getElementById("NouveauPhone").value.trim();
+                   
+                       // 1. Vérifier le passager choisi
+                      if (NomModifier.value === "chose") {
+                         messageOfName.classList.remove("valid");
+                         messageOfName.classList.add("error");
+                         messageOfName.textContent="choisir un passager";
+                         messageDisplay(messageOfName)
+                         messageOfName.style.display = "block";
+                        return;
+                      }
+                      else
+                      {
+                      // 2. Chercher le passager dans Reservations
+                          const index = Reservations.findIndex((ticket) => {
+                            return ticket.name === NomModifier.value;
+                          });
                         
-//                       }
-//                       // 4. Modifier le nom si le champ n'est pas vide
-//                       if (NewPassager.value.trim() !== "") {
-//                         Reservations[index].Pesrsonne = NewPassager.value.trim();
-                    
-//                       }
+                  
+                      // 3. Vérifier si les deux champs sont vides
+                      // &&NewSiege.value === "chose"
+                          if (NouveauNom=== "" && NouveauPhone==="" && NewSiege.value ==="chose" ) {
+                            messageModifier.classList.remove("valid");
+                            messageModifier.classList.add("error");
+                            messageModifier.innerHTML ="Les champs sont vides" ;
+                            messageModifier.style.display = "block";
+                            messageDisplay(messageModifier)
+                            
+                            
+                          }
+                          else
+                          {
+                            let resultNom=validerPassager(Reservations,NouveauNom);
+                            let resultphone=regex_telephone(NouveauPhone,Reservations);
+                   
+                            // 4. Modifier le nom si le champ n'est pas vide 
+                              //a.si il est deja existe
+                            
+                                      if(resultNom!=true &&  NouveauNom!==""){
+                                              msgNewName.textContent=resultNom
+                                              msgNewName.classList.remove("hidden")
+                                              msgNewName.classList.add("error")
+                                              messageDisplay(msgNewName)
+                                              msgNewName.style.display="block"
+                                             
+                                      }
+                                     
+                                      if(resultphone!=true && NouveauPhone!=="" )
+                                      {
+                                              msgNewPhone.textContent=resultphone
+                                              msgNewPhone.classList.remove("hidden")
+                                              msgNewPhone.classList.add("error")
+                                              messageDisplay(msgNewPhone)
+                                              msgNewPhone.style.display="block"
+                                             
+                                      }
+                                      if((resultphone!=true && NouveauPhone!=="")||(resultNom!=true &&  NouveauNom!==""))
+                                      {
+                                        return
+                                      }
+                                   
+                                    
+                                     
+                                    
+                                      if(NouveauNom !== "")
+                                      {
+                                        Reservations[index].name =NouveauNom;
+                                             console.log("valide nom de passager ")
+                                      }
+                                      if(NouveauPhone!=="")
+                                      {
+                                          Reservations[index].phone = NouveauPhone;
 
-//                       // 5. Modifier le siège si un nouveau siège est choisi
-//                       if (NewSiege.value !== "chose") {
-//                         Reservations[index].siegeNum = Number(NewSiege.value);
-//                       }
+                                           console.log("valide numero phone")
+                                      }
+                                     if (NewSiege.value !== "chose") {
+                                       console.log("new siege:",NewSiege.value)
+                                      Reservations[index].seat = NewSiege.value;
+                                    }
+                                   
+                                      // 6. Mettre à jour les boxes selon Reservations
+                                      Boxes.forEach((box) => {
+                                        //nombre de siege sur grid
+                                        const numero = box.querySelector(".siege").textContent.trim()
+                                      
+                                        // nom de passager sur grid
+                                        const nomBox = box.querySelector(".nom");
+                                        const phoneBox = box.querySelector(".phone");
 
-//                       // 6. Mettre à jour les boxes selon Reservations
-//                       Boxes.forEach((box) => {
-//                         //nombre de siege sur grid
-//                         const numero = Number(
-//                           box.querySelector(".siege").textContent.trim()
-//                         );
-//                         //nom de passager sur grid
-//                         const nomBox = box.querySelector(".nom");
+                                        const reservation = Reservations.find((ticket) => {
+                                          return ticket.seat === numero;
+                                        });
 
-//                         const reservation = Reservations.find((ticket) => {
-//                           return ticket.siegeNum === numero;
-//                         });
+                                        if (reservation) {
+                                          nomBox.textContent = reservation.name;
+                                          phoneBox.textContent = reservation.phone;
+                                          box.classList.remove("disponible");
+                                          box.classList.add("reserver");
+                                        } else {
+                                          nomBox.textContent = "";
+                                          phoneBox.textContent = "";
+                                          box.classList.remove("reserver");
+                                          box.classList.add("disponible");
+                                        }
+                                      });
+                                    //  7. Actualiser les listes
+                                        saveArray()
+                                        Remplir()
+                                        RemplirSelectEdit();
+                                        RemplirSelectAjouter()
+                                        affichageDetails()
+                                        // 8. Vider les champs après modification
+                                        document.getElementById("NouveauNom").value = "";
+                                        document.getElementById("NouveauPhone").value = "";
+                                        NewSiege.value = "chose";
+                                        messageModifier.classList.remove("error");
+                                        messageModifier.classList.add("valid");
+                                        messageModifier.innerHTML ="Modification réussie" ;
+                                        messageModifier.style.display = "block";
+                                        messageDisplay(messageModifier)
+                                        console.log("table de reservation", Reservations);
 
-//                         if (reservation) {
-//                           nomBox.textContent = reservation.Pesrsonne;
-//                           box.classList.remove("disponible");
-//                           box.classList.add("reserver");
-//                         } else {
-//                           nomBox.textContent = "";
-//                           box.classList.remove("reserver");
-//                           box.classList.add("disponible");
-//                         }
-//                       });
+                             }
+                              
 
-//                       // 7. Actualiser les listes
-//                       Remplir();
-//                       saveArray()
-//                       RemplirSelectEdit();
-//                       RemplirSelectAjouter()
-//                       // 8. Vider les champs après modification
-//                       NewPassager.value = "";
-//                       NewSiege.value = "chose";
-//                       messageModifier.classList.remove("error");
-//                       messageModifier.classList.add("valid");
-//                       messageModifier.innerHTML ="Modification réussie" ;
-//                       messageModifier.style.display = "block";
-//                       messageDisplay(messageModifier)
-//                       console.log("table de reservation", Reservations);
+                      }
+                     
 
+ 
                        
-// }
-       
+}
+  //afficher les information d'un boxes a partir le click sur le box 
+
+container.addEventListener("click",e=>{
+  // console.log("not found")
+      let siege=e.target.closest(".box");
+      if (!siege) return;
+       let Nom =siege.querySelector(".nom").textContent
+       let siegeNbr =siege.querySelector(".siege").textContent.trim()
+       if(Nom!=="" && siegeNbr!=="")
+       {
+          
+          NomModifier.value=Nom //select dyal modifier  Nom
+          remove_select.value=Nom//select Supprimer
+       }
+       else
+       {
+        Remplir();
+        RemplirOfremove();
+       }
+     
+})
 // RemoveForm.addEventListener("submit", function (e) {
 //   e.preventDefault();
 //   affichageDetails()

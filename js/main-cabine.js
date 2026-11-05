@@ -81,7 +81,6 @@ time.textContent=trip.departureTime+ "→" +trip.arrivalTime;
     }, 0);
   document.querySelector(".chiffreAffaire").textContent = recette.toLocaleString("fr-FR")+ " DH";
 }
-affichageDetails()
 
 function affichageSieges()
 {
@@ -106,6 +105,7 @@ function affichageSieges()
 } )
 } 
  affichageSieges()
+affichageDetails()
  RemplirSelectAjouter()
  Remplir()
  RemplirSelectEdit();
@@ -119,14 +119,7 @@ function Ajouter() {
   let phonePasseger = form.querySelector(".phone").value.trim(); //input
   let siegeAjouter = form.querySelector(".Siege").value.trim(); //select
   
-        //  if(nomPasseger==="" && phonePasseger==="")
-        //     {
-        //                       message.classList.remove("valid");
-        //                       message.classList.add("error");
-        //                       message.classList.remove("hidden");
-        //                       message.innerHTML ="les champs sont vide" ;
-        //                       messageDisplay(message)
-        //     }
+      
          let resultNom=validerPassager(Reservations,nomPasseger);
                 let resultphone=regex_telephone(phonePasseger,Reservations);
             if(nomPasseger==="")
@@ -159,19 +152,16 @@ function Ajouter() {
             }
             
             else
-            {
-               
-                    
-                 
+            {  
 
-           if(resultNom==true && resultphone==true)
+                  if(resultNom==true && resultphone==true)
 
-            {
-    
-          //  console.log(nomPasseger)
-          //  console.log(phonePasseger)
-           console.log("valid")
-               if (estComplet(trip)) 
+                    {
+            
+                  //  console.log(nomPasseger)
+                  //  console.log(phonePasseger)
+                  console.log("valid")
+                      if (estComplet(trip)) 
                {
                
                      message.classList.remove("valid");

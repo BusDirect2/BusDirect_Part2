@@ -185,6 +185,7 @@ function Ajouter() {
                       message.innerHTML ="Reservation bien Enregistrer" ;
                       // console.log("le squope de ajouter ");
                       Remplir();
+                      RemplirOfremove()
                       messageDisplay(message)
               }
               
@@ -224,6 +225,7 @@ function Ajouter() {
                       message.innerHTML ="Reservation bien Enregistrer" ;
                       // console.log("le squope de ajouter ");
                       Remplir();
+                      RemplirOfremove()
                       messageDisplay(message)
                       }
                     
@@ -454,6 +456,81 @@ function ModifierPassager() {
  
                        
 }
+  
+RemoveForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  affichageDetails()
+  RemplirOfremove()
+  Remplir();
+        RemplirSelectAjouter()
+        RemplirSelectEdit();
+});
+          
+// //fonction de supprimer 
+function RemplirOfremove() {
+  
+
+ remove_select.replaceChildren();
+
+  let option = document.createElement("option");
+  option.value = "chose";
+  option.textContent = "choisez un nouveau Passager";
+   remove_select.append(option);
+  Reservations.forEach((nom) => {
+    let option = document.createElement("option");
+    option.value = nom.name;
+    option.textContent = nom.name;
+    remove_select.append(option);
+   
+  });
+}
+window.Supprimer=Supprimer
+function Supprimer(){
+  //nom choisze pour supprimer 
+   let selectedNom=RemoveForm.querySelector(".RemoveNom").value;
+   if(selectedNom ==="chose")
+   {
+       messageSupprimer.classList.remove("valid");
+       messageSupprimer.classList.add("error");
+       messageSupprimer.textContent="Voulez-vous choisez un passagez";
+       messageSupprimer.style.display="block";
+       messageDisplay(messageSupprimer)
+
+   }
+   else
+   {
+        let index=Reservations.findIndex(Passager=>{
+        return Passager.name===selectedNom;
+        }  )
+        Reservations.splice(index,1)
+        saveArray()
+        document.querySelector(".cout-ticket").textContent=Reservations.length
+        
+        Boxes.forEach(box=>{
+          let nom=box.querySelector(".nom");
+          let phone=box.querySelector(".phone");
+          if(nom.textContent.trim()===selectedNom)
+          {
+               nom.textContent="";
+               phone.textContent="";
+               box.classList.remove("reserver");
+               box.classList.add("disponible");
+          }
+        })
+       messageSupprimer.classList.remove("error");
+       messageSupprimer.classList.add("valid");
+       messageSupprimer.textContent="Le passager bien supprimer ";
+       messageSupprimer.style.display="block";  
+       messageDisplay(messageSupprimer)
+      
+       
+        
+        
+       
+   }
+
+}
+         
   //afficher les information d'un boxes a partir le click sur le box 
 
 container.addEventListener("click",e=>{
@@ -474,136 +551,42 @@ container.addEventListener("click",e=>{
         RemplirOfremove();
        }
      
-})
-// RemoveForm.addEventListener("submit", function (e) {
-//   e.preventDefault();
-//   affichageDetails()
-//   RemplirOfremove()
-// });
-          
-// //fonction de supprimer 
-function RemplirOfremove() {
-  
-
- remove_select.replaceChildren();
-
-  let option = document.createElement("option");
-  option.value = "chose";
-  option.textContent = "choisez un nouveau Passager";
-   remove_select.append(option);
-  Reservations.forEach((nom) => {
-    let option = document.createElement("option");
-    option.value = nom.name;
-    option.textContent = nom.name;
-    remove_select.append(option);
+})               
    
-  });
-}
-// function Supprimer(){
-//   //nom choisze pour supprimer 
-//    let selectedNom=RemoveForm.querySelector(".RemoveNom").value;
-//    console.log("ici pour supprimer")
-//    if(selectedNom ==="chose")
-//    {
-//        messageSupprimer.classList.remove("valid");
-//        messageSupprimer.classList.add("error");
-//        messageSupprimer.textContent="Voulez-vous choisez un passagez";
-//        messageSupprimer.style.display="block";
-//        messageDisplay(messageSupprimer)
-
-//    }
-//    else
-//    {
-//         let index=Reservations.findIndex(Passager=>{
-//         return Passager.Pesrsonne===selectedNom;
-//         }  )
-//         Reservations.splice(index,1)
-//         saveArray()
-//         document.querySelector(".cout-ticket").textContent=Reservations.length
-        
-//         Boxes.forEach(box=>{
-//           let nom=box.querySelector(".nom");
-//           if(nom.textContent.trim()===selectedNom)
-//           {
-//                nom.textContent="";
-//                box.classList.remove("reserver");
-//                box.classList.add("disponible");
-//           }
-//         })
-//        messageSupprimer.classList.remove("error");
-//        messageSupprimer.classList.add("valid");
-//        messageSupprimer.textContent="Le passager bien supprimer ";
-//        messageSupprimer.style.display="block";  //save madification at local
-//        localStorage.setItem("placesDisponibles",  places);
-//       //  localStorage.setItem("montantTotal", chiffreAffaire);
-       
-//        messageDisplay(messageSupprimer)
-//         Remplir();
-//         saveArray()
-//         RemplirSelectAjouter()
-//         RemplirSelectEdit();
-//         RemplirOfremove();
-       
-//    }
-
-// }
-         
-                 
-//    //afficher les information d'un boxes a partir le click sur le box 
-
-// container.addEventListener("click",e=>{
-//   // console.log("not found")
-//       let siege=e.target.closest(".box");
-//       if (!siege) return;
-//        let Nom =siege.querySelector(".nom").textContent
-//        let siegeNbr =siege.querySelector(".siege").textContent.trim()
-//        if(Nom!=="" && siegeNbr!=="")
-//        {
-          
-//           nom.value=Nom //select dyal modifier  Nom
-//           remove_select.value=Nom//select Supprimer
-//        }
-//        else
-//        {
-//         Remplir();
-//         RemplirOfremove();
-//        }
-     
-// })
 
                           
                           
                               
               
                       
-//   Boxes.forEach((box) => {
+  // Boxes.forEach((box) => {
                       
-//                         const numero = Number(
-//                           box.querySelector(".siege").textContent.trim()
-//                         );
+  //                       const numero = Number(
+  //                         box.querySelector(".siege").textContent.trim()
+  //                       );
                      
-//                         const nomBox = box.querySelector(".nom");
+  //                       const nomBox = box.querySelector(".nom");
 
-//                         const reservation = Reservations.find((ticket) => {
-//                           return ticket.siegeNum === numero;
-//                         });
+  //                       const reservation = Reservations.find((ticket) => {
+  //                         return ticket.siegeNum === numero;
+  //                       });
 
-//                         if (reservation) {
-//                           nomBox.textContent = reservation.Pesrsonne;
-//                           box.classList.remove("disponible");
-//                           box.classList.add("reserver");
-//                         } else {
-//                           nomBox.textContent = "";
-//                           box.classList.remove("reserver");
-//                           box.classList.add("disponible");
-//                         }
-//                       });
+  //                       if (reservation) {
+  //                         nomBox.textContent = reservation.Pesrsonne;
+  //                         box.classList.remove("disponible");
+  //                         box.classList.add("reserver");
+  //                       } else {
+  //                         nomBox.textContent = "";
+  //                         box.classList.remove("reserver");
+  //                         box.classList.add("disponible");
+  //                       }
+  //                     });
 
                      
-//                       Remplir();
-//                       RemplirSelectEdit();
-//                       RemplirSelectAjouter()
-//                       RemplirOfremove();             
+                      // Remplir();
+                      // RemplirSelectEdit();
+                      // RemplirSelectAjouter()
+                      // RemplirOfremove();             
      
 
 /* DRAG & DROP */

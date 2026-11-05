@@ -1,7 +1,11 @@
 export function regex_telephone(inputPhone, trip) {
   let phone = inputPhone.trim();
   let regex_telephone = /^0[567]\d{8}$/;
+<<<<<<< HEAD
  
+=======
+  
+>>>>>>> origin/feature/reserver
   if (!regex_telephone.test(phone)) {
     return "le telephone pas valide";
   }
@@ -13,8 +17,12 @@ export function regex_telephone(inputPhone, trip) {
 }
 
 export function validerPassager(trip, p) {
+<<<<<<< HEAD
  
     if (Trouver(p, trip)) {
+=======
+   if (Trouver(p, trip)) {
+>>>>>>> origin/feature/reserver
     return "Ce passager deja Existe";
   }
   return true;

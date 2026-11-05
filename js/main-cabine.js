@@ -118,25 +118,56 @@ function Ajouter() {
   let nomPasseger = form.querySelector(".nomPasseger").value.trim(); //input
   let phonePasseger = form.querySelector(".phone").value.trim(); //input
   let siegeAjouter = form.querySelector(".Siege").value.trim(); //select
-    let resultNom=validerPassager(Reservations,nomPasseger);
-    let resultphone=regex_telephone(phonePasseger,Reservations);
-        if(resultNom!=true)
-        {
-          messageNom.textContent=validerPassager(Reservations,nomPasseger)
-          messageNom.classList.remove("hidden")
-          messageNom.classList.add("error")
-          messageDisplay(messageNom)
-        }
-       if(resultphone!=true)
-       {
-        messagePhone.textContent=regex_telephone(phonePasseger,Reservations)
-        messagePhone.classList.remove("hidden")
-        messagePhone.classList.add("error")
-        messageDisplay(messagePhone)
-       }
-       if(resultNom==true && resultphone==true)
-       {
+  
+        //  if(nomPasseger==="" && phonePasseger==="")
+        //     {
+        //                       message.classList.remove("valid");
+        //                       message.classList.add("error");
+        //                       message.classList.remove("hidden");
+        //                       message.innerHTML ="les champs sont vide" ;
+        //                       messageDisplay(message)
+        //     }
+         let resultNom=validerPassager(Reservations,nomPasseger);
+                let resultphone=regex_telephone(phonePasseger,Reservations);
+            if(nomPasseger==="")
+            {
+                      messageNom.textContent="Saisir le nom de passager"
+                      messageNom.classList.remove("hidden")
+                      messageNom.classList.add("error")
+                      messageDisplay(messageNom)
+            }
+            if(resultNom!=true && nomPasseger!=="")
+                    {
+                      messageNom.textContent=resultNom
+                      messageNom.classList.remove("hidden")
+                      messageNom.classList.add("error")
+                      messageDisplay(messageNom)
+                    }
+            if(phonePasseger==="")
+            {
+                    messagePhone.textContent="Entrer le numero de telephone"
+                    messagePhone.classList.remove("hidden")
+                    messagePhone.classList.add("error")
+                    messageDisplay(messagePhone)
+            }
+            if(resultphone!=true && phonePasseger!=="")
+            {
+                    messagePhone.textContent=resultphone
+                    messagePhone.classList.remove("hidden")
+                    messagePhone.classList.add("error")
+                    messageDisplay(messagePhone)
+            }
+            
+            else
+            {
+               
+                    
+                 
 
+           if(resultNom==true && resultphone==true)
+
+            {
+    
           //  console.log(nomPasseger)
           //  console.log(phonePasseger)
            console.log("valid")
@@ -188,8 +219,7 @@ function Ajouter() {
                       RemplirOfremove()
                       messageDisplay(message)
               }
-              
-             
+            
                 else {
         
 
@@ -235,6 +265,10 @@ function Ajouter() {
 
 
        }
+
+            }
+     
+     
        
        
    

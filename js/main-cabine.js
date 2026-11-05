@@ -105,7 +105,7 @@ function affichageSieges()
 } )
 } 
  affichageSieges()
-affichageDetails()
+ affichageDetails()
  RemplirSelectAjouter()
  Remplir()
  RemplirSelectEdit();
@@ -164,7 +164,7 @@ function Ajouter() {
                       if (estComplet(trip)) 
                {
                
-                     message.classList.remove("valid");
+                      message.classList.remove("valid");
                       message.classList.add("error");
                       message.classList.remove("hidden");
                       message.innerHTML ="le train est complet" ;
@@ -180,9 +180,11 @@ function Ajouter() {
                     console.log("place choisi derect:",place)
                     // console.log("siege :",numseat.textContent)
                       let nom = place.querySelector(".nom");
+                      let phone = place.querySelector(".phone");
                     
                      
                        nom.textContent = nomPasseger;
+                       phone.textContent = phonePasseger;
                        Reservations.push({
                         seat: numseat,
                         name: nomPasseger,
@@ -218,9 +220,11 @@ function Ajouter() {
                     let siegeBox = siege.querySelector(".siege").textContent.trim();
                     if (siegeAjouter === siegeBox) {
                       let nom = siege.querySelector(".nom");
+                      let phone = siege.querySelector(".phone");
                     
                      
                        nom.textContent = nomPasseger;
+                       phone.textContent = phonePasseger;
                        Reservations.push({
                         seat: siegeAjouter,
                         name: nomPasseger,

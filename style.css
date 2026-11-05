@@ -165,3 +165,17 @@
   border-radius: 50%;
   border: 1px dotted rgb(202, 173, 5);
 }
+
+.listeTable
+{
+  /* overflow-y: scroll;
+     height: 200px; */
+  width: 100%;
+  text-align: center;
+
+}
+.listeTable tr>td,th
+{
+  border: 1px solid ;
+  padding: 10px;
+}

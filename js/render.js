@@ -81,8 +81,31 @@ export function renderPagination(trips,page,total) {
 
   
   
+}      
+export function renderListeAttente(trip,table){
+            table.innerHTML= `
+                      <tr class="bg-gray-500 text-white">
+                          <th colspan="3">Liste Attente</th>
+                      </tr>
+
+                      <tr class="bg-slate-200">
+                          <th>Nom Complet</th>
+                          <th>Telephone</th>
+                          <th><i class="fa-solid fa-trash"></i></th>
+                      </tr>
+                      
+
+                      ${trip.waitingList.map((reserver,index) => {
+                          return `
+                              <tr class="passagerItem" >
+                                  <td>${reserver.name}</td>
+                                  <td>${reserver.phone}</td>
+                                  <td><p class="flex justify-center"><img src="images/retirer.svg" alt="iconRetirer" data-index=${index} class="btn w-10 h-10 hover:cursor-pointer"></p></td>
+                              </tr>
+                          `;
+                      }).join("")}
+                  `;
+
 }    
-export function renderCabine(trip) {}    
-export function renderListeAttente(trip){}    
-export function afficherMessage(el, texte){}    
+
 

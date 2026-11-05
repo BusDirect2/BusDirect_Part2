@@ -5,7 +5,6 @@ import {estComplet, estVIP, placesLibres, prixSiege,reserver} from "./reservatio
         const dataTrajet=new URLSearchParams(location.search);
         const id=Number(dataTrajet.get("id"))
         
-          // console.log('id trajet: '+id);
          const trip = trips.find(trip=>{
               return trip.id===id
             })
@@ -22,11 +21,8 @@ import {estComplet, estVIP, placesLibres, prixSiege,reserver} from "./reservatio
         }
         
             const Reservations =trip.reservations;
-            // console.table("length de reservations :"+trip.reservations.length)
         
-        console.log("ID:", id);
-        console.log("TRIP:", trip);
-        console.table(Reservations)
+        
 
 //affichage des inforamtions d'un boxes
 const container = document.querySelector(".countainer-Box");
@@ -157,10 +153,6 @@ function Ajouter() {
                   if(resultNom==true && resultphone==true)
 
                     {
-            
-                  //  console.log(nomPasseger)
-                  //  console.log(phonePasseger)
-                  console.log("valid")
                       if (estComplet(trip)) 
                {
                
@@ -177,8 +169,6 @@ function Ajouter() {
                       return !box.classList.contains("vip") && !box.classList.contains("reserver")
                     })
                     let numseat=place.querySelector(".siege").textContent.trim();
-                    console.log("place choisi derect:",place)
-                    // console.log("siege :",numseat.textContent)
                       let nom = place.querySelector(".nom");
                       let phone = place.querySelector(".phone");
                     
@@ -206,10 +196,10 @@ function Ajouter() {
                       message.classList.add("valid");
                       message.classList.remove("hidden");
                       message.innerHTML ="Reservation bien Enregistrer" ;
-                      // console.log("le squope de ajouter ");
                       Remplir();
                       RemplirOfremove()
                       messageDisplay(message)
+                      
               }
             
                 else {
@@ -247,7 +237,6 @@ function Ajouter() {
                       message.classList.add("valid");
                       message.classList.remove("hidden");
                       message.innerHTML ="Reservation bien Enregistrer" ;
-                      // console.log("le squope de ajouter ");
                       Remplir();
                       RemplirOfremove()
                       messageDisplay(message)
@@ -343,7 +332,6 @@ function Dispo() {
 
         formModifier.addEventListener("submit", (e) => {
           e.preventDefault();
-          ModifierPassager();
           RemplirOfremove()
 
         });
@@ -420,23 +408,20 @@ function ModifierPassager() {
                                       if(NouveauNom !== "")
                                       {
                                         Reservations[index].name =NouveauNom;
-                                             console.log("valide nom de passager ")
                                       }
                                       if(NouveauPhone!=="")
                                       {
                                           Reservations[index].phone = NouveauPhone;
 
-                                           console.log("valide numero phone")
                                       }
                                      if (NewSiege.value !== "chose") {
-                                       console.log("new siege:",NewSiege.value)
-                                      Reservations[index].seat = NewSiege.value;
+                                      Reservations[index].seat =Number(NewSiege.value);
                                     }
                                    
                                       // 6. Mettre à jour les boxes selon Reservations
                                       Boxes.forEach((box) => {
                                         //nombre de siege sur grid
-                                        const numero = box.querySelector(".siege").textContent.trim()
+                                        const numero = Number(box.querySelector(".siege").textContent.trim())
                                       
                                         // nom de passager sur grid
                                         const nomBox = box.querySelector(".nom");
@@ -473,7 +458,8 @@ function ModifierPassager() {
                                         messageModifier.innerHTML ="Modification réussie" ;
                                         messageModifier.style.display = "block";
                                         messageDisplay(messageModifier)
-                                        console.log("table de reservation", Reservations);
+                                        console.table(Reservations)
+
 
                              }
                               
@@ -562,7 +548,6 @@ function Supprimer(){
   //afficher les information d'un boxes a partir le click sur le box 
 
 container.addEventListener("click",e=>{
-  // console.log("not found")
       let siege=e.target.closest(".box");
       if (!siege) return;
        let Nom =siege.querySelector(".nom").textContent

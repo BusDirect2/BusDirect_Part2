@@ -1,9 +1,6 @@
 export const test = () => console.log("reservation OK");
 
 export function  placesLibres(trip){
-    //   console.log("Trip:", trip);
-    console.log("Reservations:", trip.reservations);
-
     return trip.capacity-trip.reservations.length
 }
 export function estComplet(trip)

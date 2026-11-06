@@ -28,10 +28,10 @@
   <header class=" flex flex-col w-full left-0 top-0 justify-between shadow-teal-100 shadow-xl  lg:flex-row">
     <div class="   m-3 flex  justify-center text-3xl  lg:w-1/3 lg:justify-start lg:m-5 "><img src="images/icon2.svg" class="logo ml-4"><h1 class="mt-2">Bus<span class="text-[rgb(89,198,185)]">Direct</span></h1></div>
     <!-- Navigation -->
-     <nav class="text-lg w-full flex justify-evenly  lg:w-1/2 ">
+     <nav class="text-lg w-full flex justify-evenly lg:w-1/2 ">
         
-        <ul class="menu flex h-full mb-2  space-x-10 items-center  lg:w-[70%] justify-end gap-3" >
-            <li class="text-base "><a href="index.html">Trajets</a></li>
+        <ul class="menu flex h-full mb-2 w-[100%]  space-x-10 items-center  lg:w-[70%] justify-end gap-3" >
+            <li class="text-base ml-"><a href="index.html">Trajets</a></li>
             <li class="text-base border-b-4 pb-2 border-yellow-500/80 rounded-md"><a href="cabine.html" >Cabine</a></li>
             <li class="text-base"><a href="tickets.html" id="linkTicket">Tickets</a><span class="cout-ticket w-5 h-2 rounded-lg  ml-2 bg-teal-300/40  p-2 text-sm ">0</span></li>
             <li><i class="fa-solid fa-circle-user text-3xl" style="color: rgb(89, 198, 185);"></i></li>
@@ -40,21 +40,21 @@
   </header>
 
   <!-- Informations du trajet -->
-  <section class="section-Head p-4 flex mx-4 w-full bg-teal-200/20 justify-center ">
-    <div class="flex justify-around w-full">
-        <div class="trajet lg:m-2">
+  <section class="section-Head p-4 flex w-full  bg-teal-200/20 justify-center ">
+    <div class="grid gap-3 grid-cols-[1fr_1fr] md:grid-cols-[1fr_1fr_1fr_1fr]  lg:grid-cols-[2fr_1fr_1fr_1fr]  w-full">
+        <div class="trajet border p-4 rounded border-[rgba(201,172,28,0.74)]  md:m-2 ">
         <h3 class="text-xl underline font-semibold mb-5 text-[rgba(201,172,28,0.74)] ">Trajet :</h3>
         <h1 class="text-lg font-bold lg:text-3xl" ><span id="depart"></span>→ <span id="destination"></span></h1>
        </div>
-      <div class="trajet lg:m-2 ">
-        <h3 class="text-xl underline font-semibold mb-5 text-[rgba(201,172,28,0.74)] "><i class="fa-solid fa-clock  mr-2" style="color: rgba(171, 148, 33, 0.735)"></i>Horaire :</h3>
-        <p class="horaire text-2xl text-center"> </p> 
+      <div class="trajet md:m-2  border p-4 rounded border-[rgba(201,172,28,0.74)]  ">
+        <h3 class="text-xl underline font-semibold mb-4 text-[rgba(201,172,28,0.74)] "><i class="fa-solid fa-clock  mr-2" style="color: rgba(171, 148, 33, 0.735)"></i>Horaire :</h3>
+        <p class="horaire md:text-2xl text-center"> </p> 
       </div>
-     <div class="trajet lg:m-2 w-[7%]">
-        <h3 class="text-xl underline font-semibold mb-5 text-[rgba(201,172,28,0.74)] flex gap-3 "><img src="images/price.svg" class="w-8" alt="prix"><span>Prix :</span></h3>
+     <div class="trajet md:m-2  border p-4 rounded border-[rgba(201,172,28,0.74)]  ">
+        <h3 class="text-xl underline font-semibold mb-4 text-[rgba(201,172,28,0.74)] flex gap-3 "><img src="images/price.svg" class="w-8" alt="prix"><span >Prix :</span></h3>
       <p class="text-2xl text-center    prix"></p>    
     </div>
-     <div class="trajet  lg:m-2 w-[7%]">
+     <div class="trajet  md:m-2  border p-4 rounded border-[rgba(201,172,28,0.74)] ">
       <p class="disponibleBadge"><span class="relative bottom-1 left-2 ">disponible</span></p>    
       <p class="reserverBadge"><span class="relative bottom-1 left-2">reserver</span></p>    
       <p class="VipBadge"><span class="relative bottom-1 left-2">Vip</span></p>    
@@ -65,10 +65,10 @@
 
   <!-- Contenu principal -->
  
-    <section class="section-Infos flex flex-col  h-30 justify-between lg:flex-row mt-4 mx-4 lg:" >
-        <div class="shadow-sm p-3 flex justify-center items-center rounded-r-2xl flex-col lg:w-1/5"><p class="text-sm font-semibold lg:text-lg">tatal Places :</p> <p class="text-red-500 text-lg lg:text-2xl">20 places </p> </div>
-        <div class="shadow-sm p-3  flex justify-center items-center rounded-2xl h-full flex-col lg:w-1/5"><p class="text-sm font-semibold lg:text-lg">Nombre Sieges Disponible </p><p class="plcDispo text-green-500 text-lg lg:text-2xl"></p></div>
-        <div class="shadow-sm p-3  flex justify-center items-center rounded-l-2xl flex-col lg:w-1/5"><p class="text-sm font-semibold lg:text-lg">recette totale du trajet</p> <p class="chiffreAffaire text-blue-700 text-lg lg:text-2xl"></p></div>
+    <section class="section-Infos flex flex-col  h-30 justify-between md:flex-row mt-4 mx-4 " >
+        <div class="shadow-sm p-3 flex justify-center items-center rounded-r-2xl flex-col md:w-[30%]"><p class="text-sm font-semibold lg:text-lg">tatal Places :</p> <p class="text-red-500 text-lg lg:text-2xl">20 places </p> </div>
+        <div class="shadow-sm p-3  flex justify-center items-center rounded-2xl h-full flex-col md:w-[30%]"><p class="text-sm font-semibold lg:text-lg">Nombre Sieges Disponible </p><p class="plcDispo text-green-500 text-lg lg:text-2xl"></p></div>
+        <div class="shadow-sm p-3  flex justify-center items-center rounded-l-2xl flex-col md:w-[30%]"><p class="text-sm font-semibold lg:text-lg">recette totale du trajet</p> <p class="chiffreAffaire text-blue-700 text-lg lg:text-2xl"></p></div>
     </section>
      <main class=" grid  grid-cols-1  lg:grid-cols-2 place-items-center lg:w-full ">
     <!-- Plan des sièges -->
@@ -392,7 +392,7 @@
       
 
   </main>
-   <section class="grid grid-cols-[1fr_1fr] w-full  place-items-center mt-10 ">
+   <section class="grid      lg:grid-cols-[1fr_1fr] w-full  place-items-center mt-10 ">
        
     <!-- Formulaire liste Attente -->
         

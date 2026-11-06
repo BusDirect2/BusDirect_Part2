@@ -34,15 +34,15 @@ export function renderPagination(trips,page,total) {
   let paginationItem=document.querySelector(".pagination")
   paginationItem.innerHTML=
   `
-          <button class="border p-4 rounded-md w-13 text-center h-13 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"  id="before" ${page===1?"disabled":""}>
+          <button class="border p-4 rounded-md  w-10 text-center h-13 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:w-13"  id="before" ${page===1?"disabled":""}>
           <i class="fa-solid fa-chevron-left"></i>
           </button>
         ${ paginationItem.innerHTML=arraynombre.map((index)=>{
-          return `<button  data-page=${index} class="num border cursor-pointer p-4 ${ page===index ?"bg-[rgb(13,194,167)] text-white" :""} rounded-md w-13 text-center h-13">
+          return `<button  data-page=${index} class="num border cursor-pointer p-4 ${ page===index ?"bg-[rgb(13,194,167)] text-white" :""} rounded-md w-10 md:w-13 text-center h-13">
                   ${index}
                   </button>`
         }).join("")}
-        <button class="border p-4 rounded-md w-13 text-center h-13 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" ${ page===nombrePages?"disabled":""}  id="after">
+        <button class="border p-4 rounded-md w-10 md:w-13 text-center h-13 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" ${ page===nombrePages?"disabled":""}  id="after">
         <i class="fa-solid fa-chevron-right"></i>
         </button>
    `

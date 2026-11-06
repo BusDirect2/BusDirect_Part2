@@ -12,7 +12,7 @@ BusDirect est une application web de gestion des trajets et des réservations de
      - un liste attente si le trajet complet 
 
 ## Technologies utilisées
-``text
+
      * HTML5
      * CSS3
      * Tailwind CSS
@@ -20,7 +20,7 @@ BusDirect est une application web de gestion des trajets et des réservations de
      * Fetch API
      * LocalStorage
      * Git & GitHub
-  ```
+
 ## Structure du projet
 
 busdirect-partie2/ 

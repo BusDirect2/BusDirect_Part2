@@ -14,6 +14,7 @@ if (id > 20 || id <= 0 || !Number(id)) {
 }
 console.table(trip)
 const Reservations = trip.reservations;
+document.getElementById("linkCabine").href=`cabine.html?id=${id}`
 let title=document.querySelector(".titleTrajet");
 title.textContent=`${trip.departure}  → ${trip.destination}`
 const container=document.querySelector(".countainer_Tickets");

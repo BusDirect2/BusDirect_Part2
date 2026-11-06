@@ -14,17 +14,37 @@ if (id > 20 || id <= 0 || !Number(id)) {
 }
 console.table(trip)
 const Reservations = trip.reservations;
-
+let title=document.querySelector(".titleTrajet");
+title.textContent=`${trip.departure}  → ${trip.destination}`
 const container=document.querySelector(".countainer_Tickets");
-const inp=document.querySelector(".search");
+const input=document.querySelector(".search");
 
 //remplir reservation from lacol storage 
-//  let data=JSON.parse(localStorage.getItem("reservations")|| "[]")
-//  Reservations.push(...data)
+
  let count=document.querySelector(".cout-ticket");
  count.textContent=Reservations.length;
-//  console.log(data);
-// console.log(container);
+input.addEventListener("input",()=>{
+   let content =input.value.toLowerCase()
+     const cards = container.querySelectorAll(".ticket");
+
+    cards.forEach(card => {
+
+        let contenu = card.textContent.toLowerCase();
+     
+        if( contenu.includes(content))
+            {
+                 card.classList.remove("hidden");
+            }
+            else
+            {
+                 card.classList.add("hidden")
+            }
+    
+     
+
+    });
+   
+})
 
 
 
@@ -47,8 +67,8 @@ const inp=document.querySelector(".search");
                     <td class="value">${ticket.seat}</td>
                   </tr>
                   <tr>
-                    <td class="name">Trajet:</td>
-                    <td class="value">Safi → Marrakech </td>
+                    <td class="name ">Trajet:</td>
+                    <td class="value text-sm">${trip.departure} → ${trip.destination} </td>
                   </tr>
                 </table>
                
@@ -57,13 +77,13 @@ const inp=document.querySelector(".search");
    
  ).join("");
 
- let tickets=document.querySelectorAll(".ticket");
-     tickets.forEach(ticket=>{
-      let nom=ticket.querySelector(".nom");
+//  let tickets=document.querySelectorAll(".ticket");
+//      tickets.forEach(ticket=>{
+//       let nom=ticket.querySelector(".nom");
 
-      console.log(nom.textContent)
+//       console.log(nom.textContent)
       
-     })
+    //  })
 
 
 

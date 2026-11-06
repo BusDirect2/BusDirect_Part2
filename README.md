@@ -38,6 +38,8 @@ busdirect-partie2/
 └── README.md
 ```
 ## les pages
+```html
  -page trajets : [voir_page](index.html)
  -page cabine  : [voir_page](cabine.html)
  -page tickets : [voir_page](tickets.html)
+```

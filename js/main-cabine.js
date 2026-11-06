@@ -541,44 +541,18 @@ container.addEventListener("click", (e) => {
   }
 });
 
-// Boxes.forEach((box) => {
-
-//                       const numero = Number(
-//                         box.querySelector(".siege").textContent.trim()
-//                       );
-
-//                       const nomBox = box.querySelector(".nom");
-
-//                       const reservation = Reservations.find((ticket) => {
-//                         return ticket.siegeNum === numero;
-//                       });
-
-//                       if (reservation) {
-//                         nomBox.textContent = reservation.Pesrsonne;
-//                         box.classList.remove("disponible");
-//                         box.classList.add("reserver");
-//                       } else {
-//                         nomBox.textContent = "";
-//                         box.classList.remove("reserver");
-//                         box.classList.add("disponible");
-//                       }
-//                     });
-
-// Remplir();
-// RemplirSelectEdit();
-// RemplirSelectAjouter()
-// RemplirOfremove();
 
 /* DRAG & DROP */
 let drag = null;
 
 Boxes.forEach((box) => {
-  box.addEventListener("dragstart", () => {
-    const nomBox = box.querySelector(".nom").textContent.trim();
 
-    if (nomBox === "") {
-      drag = null;
-      return;
+  box.addEventListener("dragstart", (e) => {
+
+    if (box.querySelector(".nom").textContent.trim() === "") {
+      drag = null
+      e.preventDefault()
+      return
     }
 
     drag = box;
@@ -592,7 +566,11 @@ Boxes.forEach((box) => {
 
   box.addEventListener("dragover", (e) => {
     e.preventDefault();
-    box.style.backgroundColor = "rgba(89, 198, 185, 0.3)";
+    if(box.querySelector(".nom").textContent.trim() === "")
+    {
+      box.style.backgroundColor="rgba(255, 0, 0, 0.352)"
+       
+    }
   });
 
   box.addEventListener("dragleave", () => {
@@ -617,7 +595,7 @@ Boxes.forEach((box) => {
 
     // Trouver la réservation du passager
     const reservation = Reservations.find(
-      (ticket) => ticket.siegeNum === siegeDepart,
+      (ticket) => ticket.seat === siegeDepart,
     );
 
     if (!reservation) {
@@ -626,19 +604,21 @@ Boxes.forEach((box) => {
     }
 
     // Modifier le numéro du siège dans la réservation
-    reservation.siegeNum = siegeArrivee;
+    reservation.seat = siegeArrivee;
 
     // Sauvegarder les données
-    saveArray();
+    
 
     // Mettre à jour les noms et les couleurs
     Boxes.forEach((s) => {
       const numero = Number(s.querySelector(".siege").textContent.trim());
 
       const nom = s.querySelector(".nom");
-      const ticket = Reservations.find((r) => r.siegeNum === numero);
+      const phone = s.querySelector(".phone");
+      const ticket = Reservations.find((r) => r.seat === numero);
 
-      nom.textContent = ticket ? ticket.Pesrsonne : "";
+      nom.textContent = ticket ? ticket.name : "";
+      phone.textContent = ticket ? ticket.phone : "";
 
       s.classList.toggle("reserver", Boolean(ticket));
       s.classList.toggle("disponible", !ticket);
@@ -646,6 +626,8 @@ Boxes.forEach((box) => {
     });
 
     // Actualiser les listes des formulaires
+    saveArray();
+    affichageDetails()
     Remplir();
     RemplirSelectEdit();
     RemplirSelectAjouter();

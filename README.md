@@ -22,7 +22,7 @@ BusDirect est une application web de gestion des trajets et des réservations de
      * Git & GitHub
 
 ## Structure du projet
-
+```html
 busdirect-partie2/ 
 ├── index.html 
 ├── cabine.html 
@@ -36,7 +36,7 @@ busdirect-partie2/
 │ ├── main-trajets.js (point d'entrée de index.html) 
 │ └── main-cabine.js (point d'entrée de cabine.html) 
 └── README.md
-
+```
 ## les pages
  -page trajets : [voir_page](index.html)
  -page cabine  : [voir_page](cabine.html)

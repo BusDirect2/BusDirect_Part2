@@ -14,25 +14,26 @@
        
 </head>
 <body class="h-full "> 
-    <div id="modal" class="hidden  w-full z-1 fixed h-full top-0 left-0 overflow-hidden flex justify-center items-center" style="background-color: rgba(0,0,0,0.3);">
+  
+ 
+  <div class="contenent">
+      <div id="modal" class="hidden  w-full z-1 fixed h-full top-0 left-0 overflow-hidden flex justify-center items-center" style="background-color: rgba(0,0,0,0.3);">
         <div class="bg-white w-[30%] h-[25%] flex justify-center items-center flex-col relative rounded-md gap-6">
                 
                 <p class="showMsg font-semibold text-2xl w-[70%] text-center "> </p>
                 <p><button class="close font-semibold rounded-md text-2xl text-white px-10 py-4  bg-green-600 cursor-pointer">d'accord</button></p>
         </div>
     </div>
- 
-  <div class="contenent">
      <!-- En-tête du site -->
-  <header class=" flex flex-col justify-between shadow-teal-100 shadow-xl  lg:flex-row">
+  <header class=" flex flex-col w-full left-0 top-0 justify-between shadow-teal-100 shadow-xl  lg:flex-row">
     <div class="   m-3 flex  justify-center text-3xl  lg:w-1/3 lg:justify-start lg:m-5 "><img src="images/icon2.svg" class="logo ml-4"><h1 class="mt-2">Bus<span class="text-[rgb(89,198,185)]">Direct</span></h1></div>
     <!-- Navigation -->
      <nav class="text-lg w-full flex justify-evenly  lg:w-1/2 ">
         
         <ul class="menu flex h-full mb-2  space-x-10 items-center  lg:w-[70%] justify-end gap-3" >
             <li class="text-base "><a href="index.html">Trajets</a></li>
-            <li class="text-base border-b-4 pb-2 border-yellow-500/80 rounded-md"><a href="cabine.html">Cabine</a></li>
-            <li class="text-base"><a href="tickets.html">Tickets</a><span class="cout-ticket w-5 h-2 rounded-lg  ml-2 bg-teal-300/40  p-2 text-sm ">0</span></li>
+            <li class="text-base border-b-4 pb-2 border-yellow-500/80 rounded-md"><a href="cabine.html" >Cabine</a></li>
+            <li class="text-base"><a href="tickets.html" id="linkTicket">Tickets</a><span class="cout-ticket w-5 h-2 rounded-lg  ml-2 bg-teal-300/40  p-2 text-sm ">0</span></li>
             <li><i class="fa-solid fa-circle-user text-3xl" style="color: rgb(89, 198, 185);"></i></li>
         </ul>
      </nav>

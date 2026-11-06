@@ -13,8 +13,8 @@
        <link rel="shortcut icon" href="images/icon2.svg" type="image/x-icon">
        
 </head>
-<body  class="min-h-screen flex flex-col">
-
+<body  class="min-h-screen flex  relative flex-col ">
+       <div class="contenent  min-h-screen flex flex-col w-full">
       <header class=" flex flex-col justify-between shadow-teal-100 shadow-xl  lg:flex-row">
     <div class="   m-3 flex  justify-center text-3xl  lg:w-1/3 lg:justify-start lg:m-5 "><img src="images/icon2.svg" class="logo ml-4"><h1 class="mt-2">Bus<span class="text-[rgb(89,198,185)]">Direct</span></h1></div>
     <!-- Navigation -->
@@ -23,7 +23,7 @@
         <ul class="menu flex h-full mb-2  space-x-10 items-center  lg:w-[70%] justify-end gap-3" >
             <li class="text-base "><a href="index.html">Trajets</a></li>
             <li class="text-base "><a href="cabine.html">Cabine</a></li>
-            <li class="text-base pb-2 border-b-4 border-yellow-500/80 rounded-md"><a href="tickets.html">Tickets</a><span class="cout-ticket ml-2  bg-teal-300/40 rounded-3xl p-2 text-sm ">0</span></li>
+            <li class="text-base pb-2 border-b-4 border-yellow-500/80 rounded-md"><a href="#tickets" >Tickets</a><span class="cout-ticket ml-2  bg-teal-300/40 rounded-3xl p-2 text-sm ">0</span></li>
             <li><i class="fa-solid fa-circle-user text-3xl" style="color: rgb(89, 198, 185);"></i></li>
         </ul>
      </nav>
@@ -40,18 +40,23 @@
       <i class="fa-solid fa-magnifying-glass"  style="color: rgba(154, 153, 149, 0.731);font-size: 25px;position: absolute;right:20%;top: 25%;"></i>
     </div>
   </section>
-  <main class="w-full  flex justify-center mt-5 flex-1">
-       <section class="countainer_Tickets w-[95%]  h-auto grid grid-cols-1 place-items-center gap-3 lg:grid-cols-3  md:grid-cols-2">
+  <main class="w-full flex justify-center mt-5 flex-1">
+       <section class="countainer_Tickets w-[95%]  h-auto grid grid-cols-1  gap-3 lg:grid-cols-4 lg:place-items-center  md:grid-cols-2">
               
                
        </section>
   </main>
          <!-- Pied de page -->
-  <footer class="bg-black text-center h-20 pt-4 mt-4" >
+  <footer class="bg-black text-center  h-20 pt-4 mt-4  w-full " >
     <p class="text-white ">© 2026 BusDirect - Gestion des réservations</p>
   </footer>
-
+  </div>
+ <div class="messageError flex flex-col gap-4 justify-center items-center min-h-screen hidden ">
+     <h1 class="text-9xl font-bold">404</h1>
+     <h2 class="text-xl font-semibold ">Trajet Introvable </h2>
+     <p class="text-gray-700">La ressource n’a pas pu être trouvée sur ce serveur.</p>
+  </div>
     <!-- <script src="script.js"></script> -->
-    <script src="tickets_script.js"></script>
+    <script type="module" src="js/main-tickets.js"></script>
 </body>
 </html>

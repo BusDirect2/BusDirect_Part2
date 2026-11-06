@@ -16,13 +16,16 @@ const id = Number(dataTrajet.get("id"));
 const trip = trips.find((trip) => {
   return trip.id === id;
 });
-
+//link 
+   let link =document.getElementById("linkTicket")
+    link.href = `tickets.html?id=${id}`;
 let contentpricipale = document.querySelector(".contenent");
 let messageError = document.querySelector(".messageError");
 if (id > 20 || id <= 0 || !Number(id)) {
   contentpricipale.classList.add("hidden");
   messageError.classList.remove("hidden");
 }
+
 
 const Reservations = trip.reservations;
 
@@ -58,7 +61,7 @@ function affichageDetails() {
   depart.textContent = trip.departure;
   let destination = document.getElementById("destination");
   destination.textContent = trip.destination;
-
+   
   //prix
   let prix = document.querySelector(".prix");
   prix.textContent = trip.price + "DH";

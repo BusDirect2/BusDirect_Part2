@@ -52,8 +52,8 @@
   /* height: 50%; */
   background-color: rgba(225, 241, 239, 0.747);
   margin-bottom: 3px;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 600;
 }
 .box p.nomPhone>.nom{
   height: 70%;
@@ -105,20 +105,13 @@
       
 .table_tickets
 {
- 
-  height: 80%;
+  height: 70%;
   margin: auto;
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
-  
 }
 
-.table_tickets td
-{
-  /* border: 1px solid; */
-  border-collapse: 3px;
-  padding: 4px;
-}
+
 .table_tickets .name
 {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -142,8 +135,8 @@
   content: "";
   display: inline-block;
   background-color: rgb(81, 228, 81);
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   border: 1px dotted green;
 }
@@ -151,8 +144,8 @@
   content: "";
   display: inline-block;
   background-color: rgb(226, 61, 61);
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   border: 1px dotted rgb(186, 25, 25);
 }
@@ -160,8 +153,8 @@
   content: "";
   display: inline-block;
   background-color: rgb(228, 211, 24);
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   border: 1px dotted rgb(202, 173, 5);
 }

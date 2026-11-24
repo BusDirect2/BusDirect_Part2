@@ -22,6 +22,7 @@ const trip = trips.find((trip) => {
 let contentpricipale = document.querySelector(".contenent");
 let messageError = document.querySelector(".messageError");
 if (id > 20 || id <= 0 || !Number(id)) {
+  // window.location.href="404.html"
   contentpricipale.classList.add("hidden");
   messageError.classList.remove("hidden");
 }

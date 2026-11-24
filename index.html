@@ -13,12 +13,12 @@
 </head>
 <body  class="min-h-screen flex flex-col">
 
-      <header class=" flex  justify-around  shadow-sm  ">
-    <div class="   m-3 flex  text-3xl  lg:w-1/3 md:justify-start md:m-5 "><img src="images/icon2.svg" class="logo ml-4"><h1 class="mt-2">Bus<span class="text-[rgb(89,198,185)]">Direct</span></h1></div>
+      <header class=" flex  justify-between  shadow-sm  ">
+    <div class=" m-3 flex  text-3xl  items-center lg:w-1/3 md:justify-start  md:m-5 "><img src="images/icon2.svg" class="logo w-10 h-10  md:w-12 md:h-12 "><h1 class="text-xl md:text-2xl">Bus<span class="text-[rgb(89,198,185)]">Direct</span></h1></div>
     <!-- Navigation -->
-     <nav class="text-lg w-full flex justify-end m-6 gap-4 md:gap-20 md:w-1/2 ">
-            <a href="index.html" class="text-lg border-b-4  border-yellow-500/80 rounded-md">Trajets</a>
-            <i class="fa-solid fa-circle-user text-4xl md:mr-4" style="color: rgb(37, 174, 158);"></i>
+     <nav class="text-lg w-full flex justify-end items-center   md:w-[20%] m-6 gap-7 md:gap-15  ">
+            <a href="index.html" class="text-sm h-7  md:text-[16px] md:h-8  border-b-4  border-yellow-500/80 rounded-md">Trajets</a>
+            <i class="fa-solid fa-circle-user text-3xl md:text-4xl md:mr-4" style="color: rgb(37, 174, 158);"></i>
      </nav>
   </header>
   <head>
@@ -49,7 +49,7 @@
        <span class="message w-full text-gray-800 hidden text-xl text-center">Aucun trajet ne correspond...</span>
 
       
-       <div class="gridTrajets grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-3 p-5 " id="grid">
+       <div class="gridTrajets grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr] w-full gap-2" id="grid">
       </div>
       
 

@@ -15,28 +15,28 @@
 </head>
 <body  class="min-h-screen flex  relative flex-col ">
        <div class="contenent  min-h-screen flex flex-col w-full">
-      <header class=" flex flex-col justify-between shadow-teal-100 shadow-xl  lg:flex-row">
-    <div class="   m-3 flex  justify-center text-3xl  lg:w-1/3 lg:justify-start lg:m-5 "><img src="images/icon2.svg" class="logo ml-4"><h1 class="mt-2">Bus<span class="text-[rgb(89,198,185)]">Direct</span></h1></div>
+    <header class=" flex flex-col w-full gap-3 md:gap-0 left-0 top-0   items-center md:justify-between  shadow-teal-200 shadow-xl  md:flex-row">
+    <div class=" m-3 flex  text-3xl  items-center lg:w-1/3 md:justify-start  md:m-5 "><img src="images/icon2.svg" class="logo w-10 h-10  md:w-12 md:h-12 "><h1 class="text-xl md:text-2xl">Bus<span class="text-[rgb(89,198,185)]">Direct</span></h1></div>
     <!-- Navigation -->
-     <nav class="text-lg w-full flex justify-evenly  lg:w-1/2 ">
+     <nav class="text-lg w-full flex  items-center  justify-center   md:w-[50%]  lg:w-[35%] ">
         
-        <ul class="menu flex h-full mb-2  space-x-10 items-center  lg:w-[70%] justify-end gap-3" >
-            <li class="text-base "><a href="index.html">Trajets</a></li>
-            <li class="text-base "><a href="" id="linkCabine">Cabine</a></li>
-            <li class="text-base pb-2 border-b-4 border-yellow-500/80 rounded-md"><a href="#tickets" >Tickets</a><span class="cout-ticket ml-2  bg-teal-300/40 rounded-3xl p-2 text-sm ">0</span></li>
+        <ul class="menu flex h-full mb-2 text-sm  space-x-10 items-center" >
+            <li ><a href="index.html">Trajets</a></li>
+            <li ><a href="cabine.html" id="linkCabine">Cabine</a></li>
+            <li class="border-b-4 text-yellow-600/80 border-yellow-500/80 pb-1 rounded-md"><a href="#tickets" >Tickets</a></li>
             <li><i class="fa-solid fa-circle-user text-3xl" style="color: rgb(89, 198, 185);"></i></li>
         </ul>
      </nav>
   </header>
   <!-- Informations du trajet -->
-  <section class="section-Head flex flex-col md:flex-row p-4  mx-4 bg-teal-200/20 ">
-    <div class="trajet text-center w-[100%] md:text-left  md:w-[40%]   md:m-2">
-        <h3 class="text-lg  mb-2">trajet</h3>
-        <h1 class="titleTrajet text-lg font-bold  lg:text-2xl" style="color: rgba(171, 148, 33, 0.735);"></h1>
+  <section class="section-Head flex flex-col gap-y-2 md:gap-y-0 md:flex-row p-4  mx-4 bg-teal-200/20 ">
+    <div class="trajet text-center w-[100%] md:text-left  md:w-[50%]   md:m-2">
+        <h1 class="titleTrajet text-lg font-semiboldbold  lg:text-2xl" style="color: rgba(112, 97, 24, 0.735);"></h1>
     </div>
     
-    <div class="details-trajet  w-[100%] flex justify-center relative md:w-[80%]">
-      <input type="search" placeholder="Recherche ici ...." class="search bg-white h-8 w-[70%] p-5 border border-[rgba(186,162,45,0.91)] rounded mt-4">
+    <div class="details-trajet  w-[100%] flex justify-center  md:justify-end relative  ">
+      <input type="search" placeholder="Recherche ici ...." class="search bg-white h-8 w-full md:w-[70%] p-5 border border-[rgba(186,162,45,0.91)] rounded ">
+      <i class="fa-solid fa-search absolute text-lg text-gray-500/70 top-3 right-3"></i>
     </div>
   </section>
   <main class="w-full flex justify-center mt-5 flex-1">

@@ -12,7 +12,6 @@ function afficher(trips) {
     
 }   
 afficher(trips)
-
 function Recherche(trips)
 {
   let ville=document.getElementById("cherche").value.toLowerCase();
@@ -20,7 +19,7 @@ function Recherche(trips)
   let message=document.querySelector(".message");
  
         
-  let NewTable=trips.filter(trip=>{
+      let NewTable=trips.filter(trip=>{
        let search=trip.departure.toLowerCase().includes(ville)||trip.destination.toLowerCase().includes(ville);
      
        let filter=true;
@@ -72,7 +71,7 @@ function Recherche(trips)
        let trajetChoisi=e.target.closest("[data-id]")
          if(trajetChoisi===null)
             {
-            // alert("trajets introuvable")
+           
                e.preventDefault()
                return
             }

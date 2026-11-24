@@ -9,11 +9,11 @@ export function renderTrajets(trips) {
         const complet=estComplet(trip)
         const {id,departure,destination,departureTime,arrivalTime,price,reservations,waitingList,capacity}=trip
           return  `<div data-id="${trip.id}" class="trajet-Crad cursor-pointer border border-gray-400 shadow-md p-3 rounded-md   flex flex-col gap-2 ">
-                        <p">trajet#${trip.id}</p>
-                        <h2 class="font-bold  text-2xl">${trip.departure}->${trip.destination} </h2>
+                        <p class="text-sm text-gray-500" >trajet#${trip.id}</p>
+                        <h2 class="font-semibold  text-2xl">${trip.departure}->${trip.destination} </h2>
                         <div class="flex justify-between items-center"> <p class="text-gray-400 text-md">${trip.departureTime}-${trip.arrivalTime}</p> <p class="font-bold text-xl">${trip.price}DH</p></div>
-                        <div class="flex justify-between items-center"> <p class="statut p-3 rounded-xl ${complet?"bg-red-200 text-red-700":"bg-green-200 text-green-700" }">${complet ? "Complet" :"Disponible"}</p> <p class="">${dispo} place disponible</p></div>
-                        <div class="flex justify-between p-3  text-lg w-full"> <p ><i class="fa-solid fa-bus" ></i> ${trip.capacity}</p> <p class=""><i class="fa-solid fa-user"></i>&nbsp  ${trip.waitingList.length} en attente</p></div>
+                        <div class="flex justify-between items-center"> <p class="statut p-3 rounded-lg ${complet?"bg-red-200 text-red-700":"bg-green-200 text-green-700" }">${complet ? "Complet" :"Disponible"}</p> <p class="">${dispo} place disponible</p></div>
+                        <div class="flex justify-between p-3  text-md w-full"> <p ><i class="fa-solid fa-bus" ></i> ${trip.capacity}</p> <p class=""><i class="fa-solid fa-user"></i>&nbsp  ${trip.waitingList.length} en attente</p></div>
                     </div>`;
                  }).join("");
 
@@ -76,6 +76,7 @@ export function renderPagination(trips,page,total) {
             page++;  
             renderPagination(trips,page,total)
         }
+       
    })
 
 

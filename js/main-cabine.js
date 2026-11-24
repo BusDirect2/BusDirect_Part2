@@ -302,6 +302,7 @@ function messageDisplay(message) {
 
 formModifier.addEventListener("submit", (e) => {
   e.preventDefault();
+   affichageSieges()
   RemplirOfremove();
 });
 window.ModifierPassager = ModifierPassager;

@@ -165,7 +165,7 @@ function Ajouter() {
         nom.textContent = nomPasseger;
         phone.textContent = phonePasseger;
         Reservations.push({
-          seat: numseat,
+          seat: Number(numseat),
           name: nomPasseger,
           phone: phonePasseger,
         });
@@ -201,7 +201,7 @@ function Ajouter() {
             nom.textContent = nomPasseger;
             phone.textContent = phonePasseger;
             Reservations.push({
-              seat: siegeAjouter,
+              seat:Number(siegeAjouter),
               name: nomPasseger,
               phone: phonePasseger,
             });
@@ -591,7 +591,7 @@ Boxes.forEach((box) => {
     const siegeDepart = Number(drag.querySelector(".siege").textContent.trim());
 
     const siegeArrivee = Number(box.querySelector(".siege").textContent.trim());
-
+   
     // On déplace uniquement vers un siège libre
     if (!box.classList.contains("disponible")) {
       box.style.backgroundColor = "";
@@ -600,7 +600,7 @@ Boxes.forEach((box) => {
 
     // Trouver la réservation du passager
     const reservation = Reservations.find(
-      (ticket) => ticket.seat === siegeDepart,
+      (ticket) => ticket.seat == siegeDepart,
     );
 
     if (!reservation) {
@@ -610,17 +610,17 @@ Boxes.forEach((box) => {
 
     // Modifier le numéro du siège dans la réservation
     reservation.seat = siegeArrivee;
-
-    // Sauvegarder les données
     
-
+    // Sauvegarder les données
+         saveArray();
+ 
     // Mettre à jour les noms et les couleurs
     Boxes.forEach((s) => {
       const numero = Number(s.querySelector(".siege").textContent.trim());
 
       const nom = s.querySelector(".nom");
       const phone = s.querySelector(".phone");
-      const ticket = Reservations.find((r) => r.seat === numero);
+      const ticket = Reservations.find((r) => r.seat == numero);
 
       nom.textContent = ticket ? ticket.name : "";
       phone.textContent = ticket ? ticket.phone : "";
